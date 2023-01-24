@@ -24,9 +24,9 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getItPages.addListener(() {
-      setState(() {});
-    });
+    // getItPages.addListener(() {
+    //   setState(() {});
+    // });
 
     animationController = AnimationController(vsync: this, duration: 500.milliseconds);
   }
@@ -68,7 +68,22 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                       image: AssetImage("images/ui/offset.png"),
                       fit: BoxFit.fill,
                     )
-                  : null,
+                  : getItPages.urlPath == '/ContactUs'
+                      ? DecorationImage(
+                          image: AssetImage("images/ui/Contact Us.png"),
+                          fit: BoxFit.fill,
+                        )
+                      : getItPages.urlPath == '/DiscoverPage'
+                          ? DecorationImage(
+                              image: AssetImage("images/ui/Discover.png"),
+                              fit: BoxFit.fill,
+                            )
+                          : getItPages.urlPath == '/BlogPage'
+                              ? DecorationImage(
+                                  image: AssetImage("images/ui/Blogs.png"),
+                                  fit: BoxFit.fill,
+                                )
+                              : null,
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -77,7 +92,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
         ),
         child: Column(
           children: [
-            40.height,
+            20.height,
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 10),
               child: Row(
@@ -121,7 +136,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
               ),
             ),
             SizedBox(
-              height: screenSize.height / 90,
+              height: screenSize.height / 40,
             ),
             Expanded(child: widget.child)
           ],

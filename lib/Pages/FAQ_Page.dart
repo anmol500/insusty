@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_next/views/next_accordion.dart';
-import 'package:flutter_next/views/next_alerts.dart';
 import 'package:insusty/Util/FAQ_DATA.dart';
 import 'package:nb_utils/nb_utils.dart';
 

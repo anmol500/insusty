@@ -1,10 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:insusty/Pages/HomePage.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController email = TextEditingController();
+
+  TextEditingController pass = TextEditingController();
+
+  bool pressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +40,7 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: TextField(
+                controller: email,
                 decoration: InputDecoration(
                     hintText: 'Your@email.com',
                     hintStyle: TextStyle(
@@ -50,6 +62,7 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: TextField(
+                controller: pass,
                 decoration: InputDecoration(
                     hintText: 'Pas****d',
                     hintStyle: TextStyle(
@@ -81,11 +94,32 @@ class LoginPage extends StatelessWidget {
             ),
             10.height,
             InkWell(
-              onTap: () {
-                GoRouter.of(context).go('/');
+              onTap: () async {
+                pressed = true;
+                setState(() {});
+                try {
+                  FirebaseAuth fireAuth = FirebaseAuth.instance;
+                  await fireAuth.signInWithEmailAndPassword(
+                    email: email.text,
+                    password: pass.text,
+                  );
+
+                  snackBar(context, title: 'Welcome Back! ${fireAuth.currentUser!.displayName} ', backgroundColor: Color(0xff70ae05));
+                  GoRouter.of(context).go('/CustomerDashboard');
+                  pressed = false;
+                  setState(() {});
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-not-found') {
+                    snackBar(context, title: 'No user found for that email.');
+                  } else if (e.code == 'wrong-password') {
+                    snackBar(context, title: 'Wrong password provided for that user.');
+                  }
+                  pressed = false;
+                  setState(() {});
+                }
               },
               child: Padding(
-                padding: const EdgeInsets.all(38.0),
+                padding: const EdgeInsets.symmetric(horizontal: 38.0, vertical: 25),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -97,22 +131,44 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18),
+                    padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: pressed ? 10 : 18),
                     child: Center(
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontFamily: 'nt',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
+                      child: pressed
+                          ? CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              'Log In',
+                              style: TextStyle(
+                                fontFamily: 'nt',
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
                     ),
                   ),
                 ),
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).go('/signUp');
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                child: Text(
+                  'Don’t have an account? Sign Up',
+                  style: TextStyle(
+                    fontFamily: 'nt',
+                    color: Color(0xff208207),
+                    fontSize: 15,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            12.height,
             Row(children: <Widget>[
               Expanded(
                 child: new Container(
@@ -137,11 +193,29 @@ class LoginPage extends StatelessWidget {
                     )),
               ),
             ]),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 38.0),
-              child: Image.asset(
-                'images/ui/LoginPage/googleSignin.png',
-                height: screenSize.height / 12,
+            GestureDetector(
+              onTap: () {
+                Future<UserCredential> signInWithGoogle() async {
+                  // Create a new provider
+                  GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+                  googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+                  // Once signed in, return the UserCredential
+                  return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+
+                  // Or use signInWithRedirect
+                  // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+                }
+
+                signInWithGoogle();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 38.0),
+                child: Image.asset(
+                  'images/ui/LoginPage/googleSignin.png',
+                  height: screenSize.height / 12,
+                ),
               ),
             ),
           ],

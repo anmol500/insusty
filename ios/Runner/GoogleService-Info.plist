@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>887194265327-dhbho4li4t45speqvf4167i6ht3mbsrv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.887194265327-dhbho4li4t45speqvf4167i6ht3mbsrv</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCCbNN4184S83DEsucevnpN96Pdtghrtk4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>887194265327</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.flutterfly.insusty.insusty</string>
+	<key>PROJECT_ID</key>
+	<string>insusty</string>
+	<key>STORAGE_BUCKET</key>
+	<string>insusty.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:887194265327:ios:4614c51e743c769ab35d1a</string>
+</dict>
+</plist>

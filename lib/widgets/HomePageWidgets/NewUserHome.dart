@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class NewUserHome extends StatelessWidget {
   const NewUserHome({Key? key}) : super(key: key);

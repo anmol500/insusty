@@ -1,12 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/config.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:go_router/go_router.dart';
-import 'package:insusty/widgets/Header.dart';
 import 'package:insusty/widgets/HomePageWidgets/JoinHome.dart';
 import 'package:insusty/widgets/HomePageWidgets/NewUserHome.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 import '../Util/Locator.dart';
 

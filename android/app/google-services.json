@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1088009435867",
+    "project_id": "insusty-app",
+    "storage_bucket": "insusty-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088009435867:android:8b71bae1641398beb72afe",
+        "android_client_info": {
+          "package_name": "com.flutterfly.insusty.insusty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088009435867-0atd4ab079b3d8v1kfcf38mp9smu6m0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7ZIz3YBl6a2mW4V1zhuNGKAQxw5dcVWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1088009435867-0atd4ab079b3d8v1kfcf38mp9smu6m0i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

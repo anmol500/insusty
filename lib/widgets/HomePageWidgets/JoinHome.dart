@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class JoinHome extends StatefulWidget {
   const JoinHome({Key? key, this.screenSize}) : super(key: key);
@@ -85,36 +84,35 @@ class _JoinHomeState extends State<JoinHome> {
         Positioned.fill(
           bottom: 80,
           child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(7),
-                  topRight: Radius.circular(7),
-                  bottomLeft: Radius.circular(7),
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(7),
+                    topRight: Radius.circular(7),
+                    bottomLeft: Radius.circular(7),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 5.0,
+                    )
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5.0,
-                  )
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
-                child: Text(
-                  'Join Now',
-                  style: TextStyle(
-                    fontFamily: 'nt',
-                    color: Color(0xff2F410F),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+                  child: Text(
+                    'Join Now',
+                    style: TextStyle(
+                      fontFamily: 'nt',
+                      color: Color(0xff2F410F),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-              ),
-            ).cornerRadiusWithClipRRectOnly(bottomLeft: 7, topRight: 7, topLeft: 7),
-          ),
+              )),
         )
       ],
     );
