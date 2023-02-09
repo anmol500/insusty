@@ -30,7 +30,11 @@ dependencies:
   video_player: ^2.5.1
   visibility_detector: ^0.3.3
   fl_chart: ^0.55.2
-  flutter_stripe: ^7.0.0
+  flutter_stripe: ^8.0.0+1
+  flutter_stripe_web: ^3.0.0
+  stripe_checkout: ^1.0.0
+  http: ^0.13.5
+  dio: ^4.0.6
 
 
 

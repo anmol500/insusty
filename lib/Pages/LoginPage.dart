@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
+
+import '../Util/Locator.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -32,9 +35,15 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             50.height,
-            Image.asset(
-              'images/logo.png',
-              height: screenSize.height / 12,
+            GestureDetector(
+              onTap: () {
+                getItPages.setUrlPath('/');
+                context.go('/');
+              },
+              child: Image.asset(
+                'images/logo.png',
+                height: screenSize.height / 12,
+              ),
             ),
             80.height,
             Padding(
@@ -104,8 +113,13 @@ class _LoginPageState extends State<LoginPage> {
                     password: pass.text,
                   );
 
-                  snackBar(context, title: 'Welcome Back! ${fireAuth.currentUser!.displayName} ', backgroundColor: Color(0xff70ae05));
-                  GoRouter.of(context).go('/CustomerDashboard');
+                  await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get().then((value) {
+                    value.docs[0]['individual'] == true ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
+
+                    setState(() {});
+                    snackBar(context, title: 'Welcome Back! ${fireAuth.currentUser!.displayName} ', backgroundColor: Color(0xff70ae05));
+                  });
+
                   pressed = false;
                   setState(() {});
                 } on FirebaseAuthException catch (e) {

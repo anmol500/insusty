@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -5,7 +6,8 @@ import 'package:nb_utils/nb_utils.dart';
 import '../Util/Locator.dart';
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  SettingsPage({Key? key}) : super(key: key);
+  FirebaseAuth fireAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class SettingsPage extends StatelessWidget {
               backgroundColor: Color(0xff006239),
               child: Center(
                 child: Text(
-                  'PS',
+                  fireAuth.currentUser!.displayName!.split(' ').first[0].toString() + fireAuth.currentUser!.displayName!.split(' ').last[0].toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -76,7 +78,7 @@ class SettingsPage extends StatelessWidget {
             ),
             20.height,
             Text(
-              'Pushpalatha Shenoy',
+              fireAuth.currentUser!.displayName.toString(),
               style: TextStyle(
                 fontFamily: 'nt',
                 color: Color(0xff2F900D),
@@ -87,7 +89,7 @@ class SettingsPage extends StatelessWidget {
             ),
             8.height,
             Text(
-              'Pushpalatha@shenoy.com',
+              fireAuth.currentUser!.email.toString(),
               style: TextStyle(
                 fontFamily: 'nt',
                 color: Color(0xff53785F),

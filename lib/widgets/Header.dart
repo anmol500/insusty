@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -27,8 +28,15 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
     // getItPages.addListener(() {
     //   setState(() {});
     // });
-
+    getUser();
     animationController = AnimationController(vsync: this, duration: 500.milliseconds);
+  }
+
+  var individual;
+  getUser() async {
+    await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: 'anmol@gmail.com').get().then((value) {
+      individual = value.docs[0]['individual'];
+    });
   }
 
   @override
@@ -120,7 +128,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                       } else {
                         getItPages.drawerOnUrl = Uri.base.toString().replaceAll(Uri.base.origin, '');
                         getItPages.urlPath = '/drawer';
-                        context.go('/drawer');
+                        context.go('/drawer/$individual');
                       }
                     },
                     child: Padding(

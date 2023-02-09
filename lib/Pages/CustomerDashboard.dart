@@ -32,7 +32,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
   @override
   void initState() {
     super.initState();
-    getTons();
+    getUser();
     _controller = VideoPlayerController.asset('images/ui/video/tree.mp4')
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
@@ -46,7 +46,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
     _controller.play();
   }
 
-  getTons() async {
+  getUser() async {
     await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get().then((value) {
       tons = value.docs[0]['tons'];
       refer = value.docs[0]['refer_link'];
@@ -106,7 +106,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                         ),
                         20.height,
                         Text(
-                          tons.toString(),
+                          tons.toStringAsFixed(2),
                           style: TextStyle(
                             fontFamily: 'nt',
                             color: Color(0xffffffff),
@@ -275,53 +275,58 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(18.0),
+                        GestureDetector(
+                          onTap: () {
+                            context.go('/Offset');
+                          },
                           child: Padding(
-                            padding: EdgeInsets.only(left: screenSize.width / 3),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x40000000),
-                                    offset: Offset(0, 4),
-                                    blurRadius: 4.0,
-                                  )
-                                ],
-                                color: Colors.white,
-                              ),
-                              child: Center(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      points.toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'nt',
-                                        color: Color(0xff0F6D2F),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 60,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Points',
-                                      style: TextStyle(
-                                        fontFamily: 'nt',
-                                        color: Color(0xff0F6D2F),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30,
-                                      ),
-                                    ),
+                            padding: const EdgeInsets.all(18.0),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: screenSize.width / 3),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x40000000),
+                                      offset: Offset(0, 4),
+                                      blurRadius: 4.0,
+                                    )
                                   ],
+                                  color: Colors.white,
                                 ),
-                              )),
+                                child: Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        points.toString(),
+                                        style: TextStyle(
+                                          fontFamily: 'nt',
+                                          color: Color(0xff0F6D2F),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 60,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Points',
+                                        style: TextStyle(
+                                          fontFamily: 'nt',
+                                          color: Color(0xff0F6D2F),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 30,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                              ),
                             ),
                           ),
                         ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../Util/Locator.dart';
 
 class JoinHome extends StatefulWidget {
   const JoinHome({Key? key, this.screenSize}) : super(key: key);
@@ -85,30 +88,37 @@ class _JoinHomeState extends State<JoinHome> {
           bottom: 80,
           child: Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(7),
-                    topRight: Radius.circular(7),
-                    bottomLeft: Radius.circular(7),
+              child: GestureDetector(
+                onTap: () {
+                  getItPages.setUrlPath('/login');
+                  getItPages.individual = dropDownValue == 'Individual' ? true : false;
+                  context.go('/signUp');
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(7),
+                      topRight: Radius.circular(7),
+                      bottomLeft: Radius.circular(7),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5.0,
+                      )
+                    ],
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 5.0,
-                    )
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
-                  child: Text(
-                    'Join Now',
-                    style: TextStyle(
-                      fontFamily: 'nt',
-                      color: Color(0xff2F410F),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+                    child: Text(
+                      'Join Now',
+                      style: TextStyle(
+                        fontFamily: 'nt',
+                        color: Color(0xff2F410F),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),

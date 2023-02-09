@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:insusty/widgets/HomePageWidgets/JoinHome.dart';
@@ -53,13 +54,31 @@ class HomePage extends StatelessWidget {
                     enlargeCenterPage: true,
                   ),
                   items: [
-                    Image.asset(
-                      'images/ui/HomePage/carousel0.png',
-                      fit: BoxFit.contain,
+                    GestureDetector(
+                      child: Image.asset(
+                        'images/ui/HomePage/carousel0.png',
+                        fit: BoxFit.contain,
+                      ),
+                      onTap: () {
+                        getItPages.setUrlPath('/Offset');
+                        context.go('/Offset');
+                      },
                     ),
-                    Image.asset(
-                      'images/ui/HomePage/carousel1.png',
-                      fit: BoxFit.contain,
+                    GestureDetector(
+                      onTap: () {
+                        getItPages.setUrlPath('/Offset');
+                        context.go('/Offset');
+                      },
+                      child: GestureDetector(
+                        onTap: () {
+                          getItPages.setUrlPath('/Offset');
+                          context.go('/Offset');
+                        },
+                        child: Image.asset(
+                          'images/ui/HomePage/carousel1.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
                     Image.asset(
                       'images/ui/HomePage/carousel2.png',
@@ -68,9 +87,11 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              JoinHome(
-                screenSize: screenSize,
-              ),
+              FirebaseAuth.instance.currentUser == null
+                  ? JoinHome(
+                      screenSize: screenSize,
+                    )
+                  : Container(),
               SizedBox(
                 height: screenSize.height / 20,
               ),

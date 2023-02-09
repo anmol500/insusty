@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 import 'package:insusty/Pages/BlogPage.dart';
+import 'package:insusty/Pages/BusinessDashboard.dart';
 import 'package:insusty/Pages/CalculatorPages/CalculatorQuestionPage.dart';
 import 'package:insusty/Pages/ContactUsPage.dart';
 import 'package:insusty/Pages/CustomerDashboard.dart';
@@ -17,12 +19,14 @@ import 'package:insusty/Pages/SignUpPage.dart';
 import 'package:insusty/widgets/Header.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'Pages/BusinessOffsetPage.dart';
 import 'Pages/CalculatorPages/CalcChooseCountry.dart';
 import 'Util/Locator.dart';
 import 'firebase_options.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = 'pk_live_51Ls2MpLiMJsqTuQlmvDZfAE5zec164ebM4a4h2qNYSpuxtYJi92ChmWyan2F62r5mVtWYgf0Y0c2S3HeIlfwSEMD00KbOcSRqH';
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   setPathUrlStrategy();
@@ -51,7 +55,7 @@ class MyApp extends StatelessWidget {
           ),
           GoRoute(
             // path: '/signUp',
-            path: '/s',
+            path: '/signUp',
             builder: (context, state) => SignUpPage(
               refer: '',
             ),
@@ -59,6 +63,11 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: '/CustomerDashboard',
             builder: (context, state) => CustomerDashboard(),
+          ),
+          GoRoute(
+            // path: '/BusinessDashboard',
+            path: '/BusinessDashboard',
+            builder: (context, state) => BusinessDashboard(),
           ),
           GoRoute(
             path: '/settings',
@@ -95,6 +104,10 @@ class MyApp extends StatelessWidget {
                 pageBuilder: (context, state) => customTransition(context, state, OffsetPage()),
               ),
               GoRoute(
+                path: '/b2b',
+                pageBuilder: (context, state) => customTransition(context, state, BusinessOffsetPage()),
+              ),
+              GoRoute(
                 path: '/FAQ',
                 pageBuilder: (context, state) => customTransition(context, state, FAQ_Page()),
               ),
@@ -103,8 +116,13 @@ class MyApp extends StatelessWidget {
                 pageBuilder: (context, state) => customTransition(context, state, CalcChooseCountry()),
               ),
               GoRoute(
-                path: '/drawer',
-                pageBuilder: (context, state) => customTransition(context, state, CustomDrawer()),
+                path: '/drawer/:individual',
+                pageBuilder: (context, state) => customTransition(
+                    context,
+                    state,
+                    CustomDrawer(
+                      individual: state.params['individual'],
+                    )),
               ),
             ],
             builder: (context, state, child) {

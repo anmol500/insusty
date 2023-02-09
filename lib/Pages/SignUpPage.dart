@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../Util/Locator.dart';
+
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key? key, this.refer}) : super(key: key);
   final refer;
@@ -27,6 +29,13 @@ class _SignUpPageState extends State<SignUpPage> {
   bool individual = true;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    individual = getItPages.individual;
+  }
+
+  @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
@@ -40,9 +49,15 @@ class _SignUpPageState extends State<SignUpPage> {
         child: ListView(
           children: [
             50.height,
-            Image.asset(
-              'images/logo.png',
-              height: screenSize.height / 12,
+            GestureDetector(
+              onTap: () {
+                getItPages.setUrlPath('/');
+                context.go('/');
+              },
+              child: Image.asset(
+                'images/logo.png',
+                height: screenSize.height / 12,
+              ),
             ),
             80.height,
             Padding(
@@ -199,18 +214,25 @@ class _SignUpPageState extends State<SignUpPage> {
                     'password': pass.text,
                     'points': 0,
                     'tons': 0,
+                    'dayleft': 0,
                     'plan': 'none',
                     'individual': individual,
                     'refer_link': email.text.split('@').first.replaceAll(new RegExp(r'[^\w\s]+'), '') + Random().nextInt(20).toString(),
                   }).then((value) {
                     //give refree 50 points
-                    FirebaseFirestore.instance.collection('00users').where('refer_link', isEqualTo: widget.refer).get().then((value) {
-                      FirebaseFirestore.instance.collection('00users').doc(value.docs[0].reference.id).update({'points': value.docs[0]['points'] + 50}).then((value) {
-                        fireAuth.currentUser?.updateDisplayName(name.text);
-                        GoRouter.of(context).go('/CustomerDashboard');
-                        snackBar(context, title: 'Welcome To Insusty, ${name.text}!', backgroundColor: Color(0xff70ae05));
+                    if (widget.refer.toString() != '') {
+                      FirebaseFirestore.instance.collection('00users').where('refer_link', isEqualTo: widget.refer).get().then((value) {
+                        FirebaseFirestore.instance.collection('00users').doc(value.docs[0].reference.id).update({'points': value.docs[0]['points'] + 50}).then((value) {
+                          fireAuth.currentUser?.updateDisplayName(name.text);
+                          individual ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
+                          snackBar(context, title: 'Welcome To Insusty, ${name.text}!', backgroundColor: Color(0xff70ae05));
+                        });
                       });
-                    });
+                    } else {
+                      fireAuth.currentUser?.updateDisplayName(name.text);
+                      individual ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
+                      snackBar(context, title: 'Welcome To Insusty, ${name.text}!', backgroundColor: Color(0xff70ae05));
+                    }
                   }).onError((error, stackTrace) {
                     print(error);
                     print(stackTrace);

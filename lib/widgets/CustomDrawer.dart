@@ -5,8 +5,8 @@ import 'package:insusty/Util/Locator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
-
+  const CustomDrawer({Key? key, this.individual}) : super(key: key);
+  final individual;
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -21,7 +21,8 @@ class CustomDrawer extends StatelessWidget {
                   getItPages.setUrlPath('/login');
                   context.go('/login');
                 } else {
-                  context.go('/CustomerDashboard');
+                  print(individual);
+                  individual == 'true' ? context.go('/CustomerDashboard') : context.go('/BusinessDashboard');
                 }
               }),
           DrawerMenu(
@@ -45,8 +46,8 @@ class CustomDrawer extends StatelessWidget {
           DrawerMenu(
               name: 'B2B APIs',
               onTap: () {
-                getItPages.setUrlPath('/DiscoverPage');
-                context.go('/DiscoverPage');
+                getItPages.setUrlPath('/b2b');
+                context.go('/b2b');
               }),
           DrawerMenu(
               name: 'Blogs',
@@ -69,12 +70,14 @@ class CustomDrawer extends StatelessWidget {
           SizedBox(
             height: screenSize.height / 20,
           ),
-          DrawerMenu(
-              name: 'Settings',
-              icon: Icons.settings,
-              onTap: () {
-                context.go('/settings');
-              }),
+          FirebaseAuth.instance.currentUser != null
+              ? DrawerMenu(
+                  name: 'Settings',
+                  icon: Icons.settings,
+                  onTap: () {
+                    context.go('/settings');
+                  })
+              : Container(),
           FirebaseAuth.instance.currentUser != null
               ? DrawerMenu(
                   name: 'Log Out',

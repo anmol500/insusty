@@ -13,6 +13,7 @@ void setup() {
 class Pages {
   var urlPath = '/';
   var drawerOnUrl;
+  var individual = true;
 
   setUrlPath(url) {
     urlPath = url;
