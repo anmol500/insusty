@@ -14,6 +14,11 @@ class _ContactUsPageState extends State<ContactUsPage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    var padding = EdgeInsets.symmetric(
+      horizontal: screenSize.width > 400 ? 350 : 20.0,
+      vertical: screenSize.width > 400 ? 8 : 5,
+    );
     return ListView(
       children: [
         Image.asset('images/ui/ContactUsHero.png'),
@@ -31,7 +36,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+          padding: padding,
           child: TextField(
             decoration: InputDecoration(
                 hintText: 'Your Name Please',
@@ -48,7 +53,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+          padding: padding,
           child: TextField(
             decoration: InputDecoration(
                 hintText: 'And Your Email too!',
@@ -65,7 +70,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+          padding: padding,
           child: TextField(
             decoration: InputDecoration(
                 hintText: 'Company / Organisation',
@@ -82,7 +87,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+          padding: padding,
           child: DropdownButtonFormField<String>(
             value: dropDownValue,
             icon: Icon(
@@ -130,7 +135,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+          padding: padding,
           child: TextField(
             maxLines: 3,
             decoration: InputDecoration(

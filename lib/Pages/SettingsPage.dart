@@ -24,7 +24,7 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
         ),
-        child: Column(
+        child: ListView(
           children: [
             40.height,
             SizedBox(

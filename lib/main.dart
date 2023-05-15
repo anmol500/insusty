@@ -1,12 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_web_frame/flutter_web_frame.dart';
 import 'package:go_router/go_router.dart';
+import 'package:insusty/Pages/APIDocs.dart';
+import 'package:insusty/Pages/AdminDashboard.dart';
 import 'package:insusty/Pages/BlogPage.dart';
 import 'package:insusty/Pages/BusinessDashboard.dart';
 import 'package:insusty/Pages/CalculatorPages/CalculatorQuestionPage.dart';
 import 'package:insusty/Pages/ContactUsPage.dart';
-import 'package:insusty/Pages/CustomerDashboard.dart';
+import 'package:insusty/Pages/CustomerDashboard2.dart';
+import 'package:insusty/Pages/PrivacyPolicy.dart';
+import 'package:insusty/Pages/ThankYouPage.dart';
 import 'package:insusty/widgets/CustomDrawer.dart';
 import 'package:insusty/Pages/DiscoverPage.dart';
 import 'package:insusty/Pages/FAQ_Page.dart';
@@ -26,7 +30,7 @@ import 'firebase_options.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = 'pk_live_51Ls2MpLiMJsqTuQlmvDZfAE5zec164ebM4a4h2qNYSpuxtYJi92ChmWyan2F62r5mVtWYgf0Y0c2S3HeIlfwSEMD00KbOcSRqH';
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   setPathUrlStrategy();
@@ -35,7 +39,7 @@ main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +66,7 @@ class MyApp extends StatelessWidget {
           ),
           GoRoute(
             path: '/CustomerDashboard',
-            builder: (context, state) => CustomerDashboard(),
+            builder: (context, state) => CustomerDashboard2(),
           ),
           GoRoute(
             // path: '/BusinessDashboard',
@@ -70,8 +74,29 @@ class MyApp extends StatelessWidget {
             builder: (context, state) => BusinessDashboard(),
           ),
           GoRoute(
+            // path: '/BusinessDashboard',
+            path: '/PrivacyPolicy',
+            builder: (context, state) => PrivacyPolicy(),
+          ),
+          GoRoute(
+            // path: '/BusinessDashboard',
+            path: '/AdminDashboard',
+            builder: (context, state) => AdminDashboard(),
+          ),
+          GoRoute(
             path: '/settings',
             builder: (context, state) => SettingsPage(),
+          ),
+          GoRoute(
+            path: '/ThankYouPage/:days/:name/:points/:individual/:monthly/:price',
+            builder: (context, state) => ThankYouPage(
+              days: state.params['days'],
+              name: state.params['name'],
+              points: state.params['points'],
+              individual: state.params['individual'],
+              monthly: state.params['monthly'],
+              price: state.params['price'],
+            ),
           ),
           GoRoute(
             path: '/CalculatorQuestion',
@@ -108,6 +133,10 @@ class MyApp extends StatelessWidget {
                 pageBuilder: (context, state) => customTransition(context, state, BusinessOffsetPage()),
               ),
               GoRoute(
+                path: '/APIDocs',
+                pageBuilder: (context, state) => customTransition(context, state, APIDocs()),
+              ),
+              GoRoute(
                 path: '/FAQ',
                 pageBuilder: (context, state) => customTransition(context, state, FAQ_Page()),
               ),
@@ -116,13 +145,8 @@ class MyApp extends StatelessWidget {
                 pageBuilder: (context, state) => customTransition(context, state, CalcChooseCountry()),
               ),
               GoRoute(
-                path: '/drawer/:individual',
-                pageBuilder: (context, state) => customTransition(
-                    context,
-                    state,
-                    CustomDrawer(
-                      individual: state.params['individual'],
-                    )),
+                path: '/drawer',
+                pageBuilder: (context, state) => customTransition(context, state, CustomDrawer()),
               ),
             ],
             builder: (context, state, child) {

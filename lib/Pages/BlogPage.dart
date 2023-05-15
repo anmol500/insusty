@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:nb_utils/nb_utils.dart';
 
 class BlogPage extends StatelessWidget {
   const BlogPage({Key? key}) : super(key: key);
@@ -13,6 +13,7 @@ class BlogPage extends StatelessWidget {
           '/BlogHero.png',
           fit: BoxFit.contain,
         ),
+        400.height
       ],
     );
   }

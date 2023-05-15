@@ -215,21 +215,28 @@ class _SignUpPageState extends State<SignUpPage> {
                     'points': 0,
                     'tons': 0,
                     'dayleft': 0,
+                    'apiKey': '',
                     'plan': 'none',
                     'individual': individual,
                     'refer_link': email.text.split('@').first.replaceAll(new RegExp(r'[^\w\s]+'), '') + Random().nextInt(20).toString(),
-                  }).then((value) {
+                  }).then((value) async {
                     //give refree 50 points
                     if (widget.refer.toString() != '') {
                       FirebaseFirestore.instance.collection('00users').where('refer_link', isEqualTo: widget.refer).get().then((value) {
-                        FirebaseFirestore.instance.collection('00users').doc(value.docs[0].reference.id).update({'points': value.docs[0]['points'] + 50}).then((value) {
+                        FirebaseFirestore.instance.collection('00users').doc(value.docs[0].reference.id).update({'points': value.docs[0]['points'] + 50}).then((value) async {
                           fireAuth.currentUser?.updateDisplayName(name.text);
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('userEmail', fireAuth.currentUser!.email.toString());
+                          await prefs.setBool('individual', individual);
                           individual ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
                           snackBar(context, title: 'Welcome To Insusty, ${name.text}!', backgroundColor: Color(0xff70ae05));
                         });
                       });
                     } else {
                       fireAuth.currentUser?.updateDisplayName(name.text);
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setString('userEmail', fireAuth.currentUser!.email.toString());
+                      await prefs.setBool('individual', individual);
                       individual ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
                       snackBar(context, title: 'Welcome To Insusty, ${name.text}!', backgroundColor: Color(0xff70ae05));
                     }
@@ -351,6 +358,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
+            40.height,
           ],
         ),
       ),

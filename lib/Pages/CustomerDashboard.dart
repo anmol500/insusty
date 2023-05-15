@@ -63,7 +63,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
         body: PageView(
           controller: pageController,
           scrollDirection: Axis.vertical,
-          pageSnapping: true,
+          pageSnapping: false,
           children: [
             VisibilityDetector(
               key: Key('video'),

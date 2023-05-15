@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:insusty/Pages/BusinessAPIkeyPage.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:insusty/Pages/BusinessTodayOrder.dart';
 import 'package:insusty/Pages/BusinessTotalOrder.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../Util/Locator.dart';
 import '../widgets/BusinessDashboardTiles.dart';
@@ -38,7 +40,7 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
       for (var i in value.docs) {
         if (DateFormat('EEE, d MMM yyy').format(i.data()['timestamp'].toDate()) == DateFormat('EEE, d MMM yyy').format(DateTime.now())) today = today + 1;
       }
-      await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: 'anmol@gmail.com').get().then((value) {
+      await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get().then((value) {
         dayLeft = value.docs[0]['dayleft'];
       });
       loading = false;
@@ -96,7 +98,7 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -122,13 +124,13 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BusinessDashboardTiles(
                         onTap: () {
-                          getItPages.setUrlPath('/settings');
+                          getItPages.setUrlPath('/BusinessDashboard');
                           context.go('/settings');
                         },
                         title: 'Settings',
@@ -148,45 +150,83 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    getItPages.setUrlPath('/');
-                    context.go('/');
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 55.0, vertical: 50),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0x3F000000),
-                            blurRadius: 5.0,
-                            offset: Offset(0, 5),
-                          ),
-                        ],
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xff208207),
-                            Color(0xff587B0C),
-                          ],
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'More Options',
+                        style: TextStyle(
+                          fontFamily: 'nt',
+                          color: Color(0xff00370F),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
-                        child: Center(
+                      5.height,
+                      Divider(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push((context), MaterialPageRoute(builder: (context) => BusinessAPIkeyPage()));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            'Log Out',
+                            'API Keys',
                             style: TextStyle(
                               fontFamily: 'nt',
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              color: Color(0xff00370F),
                               fontSize: 20,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
-                    ),
+                      Divider(),
+                      GestureDetector(
+                        onTap: () {
+                          getItPages.setUrlPath('/APIDocs');
+                          context.go('/APIDocs');
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            'API Docs',
+                            style: TextStyle(
+                              fontFamily: 'nt',
+                              color: Color(0xff00370F),
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      GestureDetector(
+                        onTap: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('userEmail', '');
+                          FirebaseAuth.instance.signOut();
+                          getItPages.setUrlPath('/');
+                          context.go('/');
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            'Logout',
+                            style: TextStyle(
+                              fontFamily: 'nt',
+                              color: Color(0xff00370F),
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                    ],
                   ),
                 ),
               ],

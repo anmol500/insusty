@@ -11,10 +11,12 @@ class KnowMorePage extends StatelessWidget {
     return ListView(
       children: [
         Stack(
+          alignment: Alignment.center,
           children: [
             Image.asset(
               'images/ui/Know More.jpg',
               fit: BoxFit.contain,
+              width: double.infinity,
             ),
             Positioned(
               bottom: 10,

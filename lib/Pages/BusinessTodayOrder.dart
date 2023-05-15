@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../widgets/TransactionTile.dart';
@@ -50,7 +51,8 @@ class _BusinessTodayOrderState extends State<BusinessTodayOrder> {
                   if (DateFormat('EEE, d MMM yyy').format(i.data()['timestamp'].toDate()) == DateFormat('EEE, d MMM yyy').format(DateTime.now()))
                     transactionTileList.add(
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          await Clipboard.setData(ClipboardData(text: i.id.toString()));
                           snackBar(context, title: 'Transaction ID: ${i.id} ', backgroundColor: Color(0xff70ae05));
                         },
                         child: TransactionTile(

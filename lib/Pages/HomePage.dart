@@ -1,14 +1,20 @@
+import 'package:awesome_dialog/awesome_dialog.dart' as ad;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:insusty/widgets/HomePageWidgets/JoinHome.dart';
 import 'package:insusty/widgets/HomePageWidgets/NewUserHome.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../Util/Locator.dart';
+import '../widgets/HomePageWidgets/HomePageCarousel.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
+
+  var homepageImagePaddingDesktopH = 108.0;
+  var homepageImagePaddingDesktopV = 30.0;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,61 @@ class HomePage extends StatelessWidget {
         Expanded(
           child: ListView(
             children: [
-              Image.asset('images/ui/HomePage/homepage1.png'),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenSize.width > 400 ? homepageImagePaddingDesktopH : 0),
+                child: Image.asset(
+                  'images/ui/HomePage/homepage1.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenSize.width > 400 ? homepageImagePaddingDesktopH : 10,
+                  vertical: screenSize.width > 400 ? homepageImagePaddingDesktopV : 10,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    getItPages.setUrlPath('/Offset');
+                    context.go('/Offset');
+                  },
+                  child: Image.asset(
+                    'images/ui/HomePage/homepage2.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenSize.width > 400 ? homepageImagePaddingDesktopH : 10,
+                  vertical: screenSize.width > 400 ? homepageImagePaddingDesktopV : 10,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    getItPages.setUrlPath('/Offset');
+                    context.go('/Offset');
+                  },
+                  child: Image.asset(
+                    'images/ui/HomePage/homepage3.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenSize.width > 400 ? homepageImagePaddingDesktopH : 10,
+                  vertical: screenSize.width > 400 ? homepageImagePaddingDesktopV : 10,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    getItPages.setUrlPath('/Offset');
+                    context.go('/Offset');
+                  },
+                  child: Image.asset(
+                    'images/ui/HomePage/homepage4.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
               SizedBox(
                 height: screenSize.height / 18,
               ),
@@ -30,7 +90,7 @@ class HomePage extends StatelessWidget {
                     fontFamily: 'nt',
                     color: Color(0xff00370F),
                     fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                    fontSize: screenSize.width > 400 ? 45 : 25,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -40,62 +100,26 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'nt',
                   color: Color(0xff4B4B4B),
-                  fontSize: 15,
+                  fontSize: screenSize.width > 400 ? 30 : 15,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                height: 350,
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    aspectRatio: 1.0,
-                    viewportFraction: 0.5,
-                    enlargeCenterPage: true,
-                  ),
-                  items: [
-                    GestureDetector(
-                      child: Image.asset(
-                        'images/ui/HomePage/carousel0.png',
-                        fit: BoxFit.contain,
-                      ),
-                      onTap: () {
-                        getItPages.setUrlPath('/Offset');
-                        context.go('/Offset');
-                      },
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        getItPages.setUrlPath('/Offset');
-                        context.go('/Offset');
-                      },
-                      child: GestureDetector(
-                        onTap: () {
-                          getItPages.setUrlPath('/Offset');
-                          context.go('/Offset');
-                        },
-                        child: Image.asset(
-                          'images/ui/HomePage/carousel1.png',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    Image.asset(
-                      'images/ui/HomePage/carousel2.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ],
-                ),
-              ),
+              screenSize.width > 400 ? 20.height : 0.height,
+              HomePageOffsetCarousel(),
+              screenSize.width > 400 ? 20.height : 0.height,
               FirebaseAuth.instance.currentUser == null
-                  ? JoinHome(
-                      screenSize: screenSize,
+                  ? screenSize.width < 400
+                      ? JoinHome(
+                          screenSize: screenSize,
+                        )
+                      : Container()
+                  : Container(),
+              screenSize.width < 400
+                  ? SizedBox(
+                      height: screenSize.height / 20,
                     )
                   : Container(),
-              SizedBox(
-                height: screenSize.height / 20,
-              ),
-              NewUserHome(),
+              screenSize.width < 400 ? NewUserHome() : Container(),
               SizedBox(
                 height: screenSize.height / 20,
               ),
@@ -109,9 +133,24 @@ class HomePage extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       child: GestureDetector(
                         onTap: () {
-                          getItPages.setUrlPath('/CalcChooseCountry');
+                          if (FirebaseAuth.instance.currentUser == null) {
+                            ad.AwesomeDialog(
+                              context: context,
+                              dialogType: ad.DialogType.question,
+                              animType: ad.AnimType.rightSlide,
+                              title: 'Logged in?',
+                              desc: 'Please login with an individual',
+                              btnCancelOnPress: () {},
+                              btnOkText: 'Login',
+                              btnOkOnPress: () {
+                                context.go('/login');
+                              },
+                            )..show();
+                          } else {
+                            getItPages.setUrlPath('/CalcChooseCountry');
 
-                          context.go('/CalcChooseCountry');
+                            context.go('/CalcChooseCountry');
+                          }
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -144,8 +183,26 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 150,
-              )
+                height: 40,
+              ),
+              GestureDetector(
+                onTap: () {
+                  context.go('/PrivacyPolicy');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    'Privacy Policy',
+                    style: TextStyle(
+                      fontFamily: 'nt',
+                      color: Color(0xff00370F),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

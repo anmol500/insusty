@@ -8,11 +8,12 @@ class FAQ_Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return ListView(
       children: [
         Image.asset('images/ui/FAQ.png'),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25.0),
+          padding: EdgeInsets.symmetric(vertical: 25.0),
           child: Text(
             'Get Started',
             style: TextStyle(
@@ -26,9 +27,15 @@ class FAQ_Page extends StatelessWidget {
         ),
         ...List.generate(
             question.length,
-            (index) => CustomAcorrdion(
-                  question: question[index],
-                  answer: answer[index],
+            (index) => Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenSize.width > 400 ? 50 : 8.0,
+                    vertical: screenSize.width > 400 ? 8 : 0,
+                  ),
+                  child: CustomAcorrdion(
+                    question: question[index],
+                    answer: answer[index],
+                  ),
                 )),
         70.height,
       ],

@@ -29,3 +29,15 @@ That is why we also encourage sustainable consumption and propose to you alterna
 We believe in quality over quantity and therefore we bring out the best carbon offset project for you , the community and the planet.
 ''',
 ];
+
+List apiQuestions = [
+  'How It Work.',
+  'Get Price API',
+  'Save Purchase API',
+];
+
+List apiAnswer = [
+  'There are two API to successfully embed Insusty Point System. First one ( getPrice ) will will give the discounted price when customer use their Insusty Points. Second one ( savePurchase ) will register the purchase on Insusty\'s System.',
+  'Use this API to get discounted price of any product. Put 3 query parameter: customer email, No. of insusty points, and original cart value.',
+  'Use this to register the purchase on Insusty\'s system. Put 4: query parameter: customer email, No. of insusty points, original cart value, and your insusty email'
+];

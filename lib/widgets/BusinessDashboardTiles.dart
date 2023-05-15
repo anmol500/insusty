@@ -25,7 +25,7 @@ class BusinessDashboardTiles extends StatelessWidget {
         if (onTap != null) onTap();
       },
       child: SizedBox(
-        height: screenSize.height / 3,
+        height: screenSize.height / 2.6,
         width: screenSize.width / 2.1,
         child: Padding(
           padding: const EdgeInsets.all(4.0),
@@ -38,7 +38,7 @@ class BusinessDashboardTiles extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(18.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: value == null ? MainAxisAlignment.center : MainAxisAlignment.start,
@@ -49,7 +49,7 @@ class BusinessDashboardTiles extends StatelessWidget {
                         fontFamily: 'nt',
                         color: Color(0xff00370F),
                         fontWeight: FontWeight.bold,
-                        fontSize: value == null ? 30 : 22,
+                        fontSize: 20,
                       ),
                     ),
                     value == null
@@ -59,10 +59,9 @@ class BusinessDashboardTiles extends StatelessWidget {
                         : Text(
                             value.toString(),
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xff078229),
                               fontWeight: FontWeight.bold,
-                              fontSize: 45,
+                              fontSize: 40,
                             ),
                           ),
                   ],

@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
+import 'package:flutter_stripe_web/flutter_stripe_web.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:stripe_checkout/stripe_checkout.dart';
 
 var paymentIntent;
 
@@ -12,25 +11,24 @@ Future<void> makePayment(context) async {
     //STEP 1: Create Payment Intent
     paymentIntent = await createPaymentIntent('100', 'USD');
 
-    //STEP 2: Initialize Payment Sheet
-    // await Stripe.instance
-    //     .initPaymentSheet(
-    //         paymentSheetParameters: SetupPaymentSheetParameters(
-    //             paymentIntentClientSecret: paymentIntent!['client_secret'], //Gotten from payment intent
-    //             style: ThemeMode.light,
-    //             merchantDisplayName: 'Ikay'))
-    //     .then((value) {});
+    // STEP 2: Initialize Payment Sheet
+    await WebStripe()
+        .initPaymentSheet(SetupPaymentSheetParameters(
+            paymentIntentClientSecret: paymentIntent!['client_secret'], //Gotten from payment intent
+            style: ThemeMode.light,
+            merchantDisplayName: 'Ikay'))
+        .then((value) {});
 
-    var sessionData = await Dio().post('https://api.stripe.com/v1/payment_intents?amount=1000&currency=usd',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer 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',
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        ));
-
-    var sessionId = sessionData.data['id'];
-    await redirectToCheckout(context: context, sessionId: sessionId, publishableKey: 'pk_live_51Ls2MpLiMJsqTuQlmvDZfAE5zec164ebM4a4h2qNYSpuxtYJi92ChmWyan2F62r5mVtWYgf0Y0c2S3HeIlfwSEMD00KbOcSRqH');
+    // var sessionData = await Dio().post('https://api.stripe.com/v1/payment_intents?amount=1000&currency=usd',
+    //     options: Options(
+    //       headers: {
+    //         'Authorization': 'Bearer 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',
+    //         'Content-Type': 'application/x-www-form-urlencoded',
+    //       },
+    //     ));
+    //
+    // var sessionId = sessionData.data['id'];
+    // await redirectToCheckout(context: context, sessionId: sessionId, publishableKey: 'pk_live_51Ls2MpLiMJsqTuQlmvDZfAE5zec164ebM4a4h2qNYSpuxtYJi92ChmWyan2F62r5mVtWYgf0Y0c2S3HeIlfwSEMD00KbOcSRqH');
     //STEP 3: Display Payment sheet
     displayPaymentSheet(context);
   } catch (err) {

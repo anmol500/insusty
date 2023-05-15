@@ -1,20 +1,23 @@
+import 'package:awesome_dialog/awesome_dialog.dart' as ad;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:flutter_stripe_web/flutter_stripe_web.dart';
+
 import 'package:go_router/go_router.dart';
-import 'package:insusty/Util/StripePaymentFunctions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../Util/StripeCheckout.dart';
+
 class CarousalWidget extends StatelessWidget {
-  CarousalWidget({Key? key, required this.monthly, this.asset, required this.screenSize, this.monthlyCost, this.yearlyCost, this.name, this.points, this.individual}) : super(key: key);
+  CarousalWidget({Key? key, required this.monthly, this.asset, required this.screenSize, this.monthlyCost, this.yearlyCost, this.name, this.points, this.individual, this.monthlyCostAPI, this.yearlyCostAPI}) : super(key: key);
 
   var monthly = true;
   final asset;
   final Size screenSize;
   final monthlyCost;
+  final monthlyCostAPI;
   final yearlyCost;
+  final yearlyCostAPI;
   final name;
   final points;
   final individual;
@@ -124,23 +127,12 @@ class CarousalWidget extends StatelessWidget {
                             tapped = true;
                             setState(() {});
 
-                            makePayment(context);
-
-                            //update firebase
-                            FirebaseAuth fireAuth = FirebaseAuth.instance;
-                            FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get().then((value) {
-                              FirebaseFirestore.instance.collection('00users').doc(value.docs[0].reference.id).update({
-                                'points': value.docs[0]['points'] + (monthly ? points : points * 12),
-                                'dayleft': value.docs[0]['dayleft'] + (monthly ? 30 : 365),
-                                'plan': name,
-                              }).then((value) {
-                                Navigator.pop(context);
-                                snackBar(context, title: 'Purchase Successful', backgroundColor: Color(0xff70ae05));
-                                context.go('/BusinessDashboard');
-                                tapped = false;
-                                setState(() {});
-                              });
-                            });
+                            // makePayment(context);
+                            1.seconds.delay;
+                            redirectToCheckout(context, monthly ? monthlyCostAPI : yearlyCostAPI, (monthly ? 30 : 365), name, (monthly ? points : points * 12), individual, monthly, (monthly ? monthlyCost : yearlyCost));
+                            7.seconds.delay;
+                            tapped = false;
+                            setState(() {});
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -201,105 +193,33 @@ class CarousalWidget extends StatelessWidget {
                 }),
               );
             } else {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        content: Container(
-                          height: 100,
-                          child: Center(
-                            child: Text(
-                              'please login with ' + (individual ? 'an individual' : 'a business') + ' account',
-                              style: TextStyle(
-                                fontFamily: 'nt',
-                                color: Color(0xff00370F),
-                                fontSize: 18,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        actions: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                context.go('/login');
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(7),
-                                  color: Colors.green,
-                                ),
-                                height: 40,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(
-                                    child: Text(
-                                      'Login',
-                                      style: TextStyle(
-                                        fontFamily: 'nt',
-                                        color: Color(0xffffffff),
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ));
+              ad.AwesomeDialog(
+                context: context,
+                dialogType: ad.DialogType.question,
+                animType: ad.AnimType.rightSlide,
+                title: 'Logged in?',
+                desc: 'Please login with ' + (individual ? 'an individual' : 'a business') + ' account',
+                btnCancelOnPress: () {},
+                btnOkText: 'Login',
+                btnOkOnPress: () {
+                  context.go('/login');
+                },
+              )..show();
             }
           });
         } else {
-          showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                    content: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'please login with ' + (individual ? 'an individual' : 'a business') + ' account',
-                          style: TextStyle(
-                            fontFamily: 'nt',
-                            color: Color(0xff00370F),
-                            fontSize: 18,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    actions: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            context.go('/login');
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: Colors.green,
-                            ),
-                            height: 40,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    fontFamily: 'nt',
-                                    color: Color(0xffffffff),
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ));
+          ad.AwesomeDialog(
+            context: context,
+            dialogType: ad.DialogType.question,
+            animType: ad.AnimType.rightSlide,
+            title: 'Logged in?',
+            desc: 'Please login with ' + (individual ? 'an individual' : 'a business') + ' account',
+            btnCancelOnPress: () {},
+            btnOkText: 'Login',
+            btnOkOnPress: () {
+              context.go('/login');
+            },
+          )..show();
         }
       },
       child: Image.asset(

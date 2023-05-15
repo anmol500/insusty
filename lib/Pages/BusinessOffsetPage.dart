@@ -1,10 +1,11 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../Util/Locator.dart';
 import '../widgets/CarousalWidget.dart';
-import 'dart:html' as html;
 
 class BusinessOffsetPage extends StatefulWidget {
   BusinessOffsetPage({Key? key}) : super(key: key);
@@ -57,9 +58,42 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
               enlargeCenterPage: true,
             ),
             items: [
-              CarousalWidget(monthly: monthly, asset: 'images/ui/business2.png', screenSize: screenSize, monthlyCost: 699, yearlyCost: 8388, name: 'MID GREENS', points: 0, individual: false),
-              CarousalWidget(monthly: monthly, asset: 'images/ui/business1.png', screenSize: screenSize, monthlyCost: 249, yearlyCost: 2988, name: 'ECO STARTER', points: 0, individual: false),
-              CarousalWidget(monthly: monthly, asset: 'images/ui/business3.png', screenSize: screenSize, monthlyCost: 1499, yearlyCost: 17988, name: 'BIG CHANGEMAKERS', points: 0, individual: false),
+              CarousalWidget(
+                monthly: monthly,
+                asset: 'images/ui/business2.png',
+                screenSize: screenSize,
+                monthlyCost: 699,
+                yearlyCost: 8388,
+                monthlyCostAPI: 'price_1Mb7tULiMJsqTuQlQjvqC3Go',
+                yearlyCostAPI: 'price_1Mb7tULiMJsqTuQlMt0JFV7j',
+                name: 'MID GREENS',
+                points: 0,
+                individual: false,
+              ),
+              CarousalWidget(
+                monthly: monthly,
+                asset: 'images/ui/business1.png',
+                screenSize: screenSize,
+                monthlyCost: 249,
+                yearlyCost: 2988,
+                monthlyCostAPI: 'price_1Mb7vwLiMJsqTuQlILDmWi6X',
+                yearlyCostAPI: 'price_1Mb7vwLiMJsqTuQlIL5l2US6',
+                name: 'ECO STARTER',
+                points: 0,
+                individual: false,
+              ),
+              CarousalWidget(
+                monthly: monthly,
+                asset: 'images/ui/business3.png',
+                screenSize: screenSize,
+                monthlyCost: 1499,
+                yearlyCost: 17988,
+                monthlyCostAPI: 'price_1Mb7wWLiMJsqTuQl9yUWDV4M',
+                yearlyCostAPI: 'price_1Mb7wWLiMJsqTuQltRuWrx2O',
+                name: 'BIG CHANGEMAKERS',
+                points: 0,
+                individual: false,
+              ),
             ],
           ),
         ),
@@ -120,9 +154,9 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
               boxShadow: [
                 BoxShadow(
                   color: Color(0xffc1c1c1),
-                  blurRadius: 19.0,
-                  offset: Offset(2, 2),
-                  spreadRadius: 2,
+                  blurRadius: 10.0,
+                  offset: Offset(1, 1),
+                  spreadRadius: 1,
                 ),
               ],
               color: Colors.white,
@@ -132,17 +166,14 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: Text(
-                      'Select mt tonnes of carbon you want to offset',
-                      style: TextStyle(
-                        fontFamily: 'nt',
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                      textAlign: TextAlign.center,
+                  Text(
+                    'Learn how to use Insusty API System',
+                    style: TextStyle(
+                      fontFamily: 'nt',
+                      color: Colors.black,
+                      fontSize: 18,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -151,7 +182,8 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
         ),
         GestureDetector(
           onTap: () {
-            html.window.open('http://149.28.148.8:8013/docs', '_self');
+            getItPages.setUrlPath('/APIDocs');
+            context.go('/APIDocs');
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 70),
@@ -173,7 +205,7 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Continue to FastAPI Docs',
+                    'Continue to Docs',
                     style: TextStyle(
                       fontFamily: 'nt',
                       color: Colors.white,
