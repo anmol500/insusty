@@ -55,11 +55,60 @@
 
   </style>
 
+  <link href="style.css" rel="stylesheet" />
+  <link href="css/all.min.css" rel="stylesheet" />
+
 </head>
 <body style="overflow: hidden">
-<div id="loading_indicator" class="container">
-  <img class="indicator" src="loading.gif" />
+<!--<div id="loading_indicator" class="container">-->
+<!--  <img class="indicator" src="loading.gif" />-->
+<!--</div>-->
+
+<!-- Preloader -->
+<div class="preloader-wrap" data-firstline="Stay" data-secondline="Relaxed">
+  <div class="outer">
+    <div class="inner">
+      <div class="trackbar">
+        <ul class="preloader-intro">
+          <li class="preloader-list">Réduire</li>
+          <li class="preloader-list">Compenser</li>
+          <li class="preloader-list">Référer </li>
+          <li class="preloader-list">pour</li>
+          <li class="preloader-list">l'impact</li>
+          <li class="preloader-list">Reduce</li>
+          <li class="preloader-list">Compensate</li>
+
+
+        </ul>
+        <div class="loadbar"></div>
+      </div>
+      <div class="percentage-wrapper">
+        <div class="percentage" id="precent"></div>
+      </div>
+      <div class="percentage-intro">Please Wait</div>
+    </div>
+  </div>
 </div>
+<!--/Preloader -->
+
+<script src="js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollToPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/Draggable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/EasePack.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js'></script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpK1sWi3J3EbUOkF_K4-UHzi285HyFX5M&sensor=false"></script>
+<script src="js/flutterfly webgl.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/common.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/scripts.js"></script>
+
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js

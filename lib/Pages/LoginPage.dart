@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/painting/gradient.dart' as ll;
 import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:rive/rive.dart';
 
+import '../Util/CustomClipper.dart';
 import '../Util/Locator.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,10 +19,66 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController email = TextEditingController();
-
   TextEditingController pass = TextEditingController();
-
   bool pressed = false;
+
+  //animation
+  late StateMachineController? stateMachineController;
+  late SMIBool isChecking, isHandsUp;
+  late SMITrigger trigSuccess, trigFail;
+  late SMINumber numLook;
+
+  var artboard;
+
+  @override
+  void initState() {
+    super.initState();
+    initializingRive();
+  }
+
+  initializingRive() {
+    rootBundle.load('images/rive.riv').then((value) {
+      final art = RiveFile.import(value).mainArtboard;
+      stateMachineController = StateMachineController.fromArtboard(art, 'Login Machine');
+      if (stateMachineController != null) {
+        art.addController(stateMachineController!);
+
+        for (SMIInput element in stateMachineController!.inputs) {
+          print(element.name);
+          if (element.name == 'isChecking') {
+            isChecking = element as SMIBool;
+          } else if (element.name == 'numLook') {
+            numLook = element as SMINumber;
+          } else if (element.name == 'isHandsUp') {
+            isHandsUp = element as SMIBool;
+          } else if (element.name == 'trigSuccess') {
+            trigSuccess = element as SMITrigger;
+          } else if (element.name == 'trigFail') {
+            trigFail = element as SMITrigger;
+          } else {
+            // Handle the case where element.name does not match any variable
+            // You can choose to ignore it or handle it according to your requirement
+          }
+        }
+      }
+      artboard = art;
+      setState(() {});
+    });
+  }
+
+  checking() {
+    isChecking.change(true);
+    isHandsUp.change(false);
+  }
+
+  numLockF(v) {
+    numLook.change(v.length.toDouble() * 2);
+  }
+
+  handsUp() {
+    isChecking.change(false);
+    isHandsUp.change(true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +91,8 @@ class _LoginPageState extends State<LoginPage> {
             fit: BoxFit.fill,
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             50.height,
             GestureDetector(
@@ -45,10 +105,23 @@ class _LoginPageState extends State<LoginPage> {
                 height: screenSize.height / 12,
               ),
             ),
-            80.height,
+            20.height,
+            if (artboard != null)
+              Container(
+                height: 200,
+                child: ClipOval(
+                  clipper: CustomCircleClipper(),
+                  child: Rive(
+                    artboard: artboard!,
+                  ),
+                ),
+              ),
+            20.height,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: TextField(
+                onTap: checking,
+                onChanged: (v) => numLockF(v),
                 controller: email,
                 decoration: InputDecoration(
                     hintText: 'Your@email.com',
@@ -71,6 +144,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: TextField(
+                onTap: handsUp,
                 controller: pass,
                 decoration: InputDecoration(
                     hintText: 'Pas****d',
@@ -109,6 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (email.text == 'admin' && pass.text == 'admin') {
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.setString('userEmail', email.text);
+
                   context.go('/AdminDashboard');
                 } else {
                   try {
@@ -119,6 +194,11 @@ class _LoginPageState extends State<LoginPage> {
                     );
 
                     await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get().then((value) async {
+                      isHandsUp.change(false);
+                      isChecking.change(false);
+                      trigSuccess.fire();
+                      await 2.seconds.delay;
+
                       value.docs[0]['individual'] == true ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
 
                       final prefs = await SharedPreferences.getInstance();
@@ -131,6 +211,10 @@ class _LoginPageState extends State<LoginPage> {
                     pressed = false;
                     setState(() {});
                   } on FirebaseAuthException catch (e) {
+                    isHandsUp.change(false);
+                    isChecking.change(false);
+                    trigFail.change(true);
+                    await 2.seconds.delay;
                     if (e.code == 'user-not-found') {
                       snackBar(context, title: 'No user found for that email.');
                     } else if (e.code == 'wrong-password') {
@@ -146,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    gradient: LinearGradient(
+                    gradient: ll.LinearGradient(
                       colors: [
                         Color(0xff459268),
                         Color(0xff6A8856),
