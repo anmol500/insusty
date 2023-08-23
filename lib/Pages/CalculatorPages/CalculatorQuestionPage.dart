@@ -66,28 +66,16 @@ class _CalculatorQuestionPageState extends State<CalculatorQuestionPage> {
     pageController.dispose();
     page = 0;
   }
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    List.generate(8, (index) => precacheImage(Image.asset(
-      'images/q&a/q${index + 1}.png',
-      gaplessPlayback: true,
-      fit: BoxFit.fill,
-    ).image, context));
-
-  }
 
   @override
   Widget build(BuildContext context) {
-    print(page);
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
             child: Image.asset(
-              'images/q&a/q${page + 1}.png',
-              gaplessPlayback: true,
+              screenSize.width > 750 ? 'images/q&a/qDesktop${page + 1}.png' : 'images/q&a/q${page + 1}.png',
               fit: BoxFit.fill,
             ),
           ),
@@ -124,24 +112,27 @@ class _CalculatorQuestionPageState extends State<CalculatorQuestionPage> {
               Expanded(
                 child: Container(
                   color: Colors.transparent,
-                  child: PageView(
-                    controller: pageController,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      CalculatorQuestion1(selected: selected, tapped: tapped),
-                      CalculatorQuestion2(selected: selected, tapped: tapped),
-                      CalculatorQuestion3(selected: selected, tapped: tapped),
-                      CalculatorQuestion4(selected: selected, tapped: tapped),
-                      CalculatorQuestion5(selected: selected, tapped: tapped),
-                      CalculatorQuestion6(selected: selected, tapped: tapped),
-                      CalculatorQuestion7(selected: selected, tapped: tapped),
-                      CalculatorQuestion8(selected: selected, tapped: tapped),
-                    ],
+                  child: Padding(
+                    padding: screenSize.width > 750 ? EdgeInsets.symmetric(vertical: 18.0, horizontal: 450) : EdgeInsets.all(0),
+                    child: PageView(
+                      controller: pageController,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        CalculatorQuestion1(selected: selected, tapped: tapped),
+                        CalculatorQuestion2(selected: selected, tapped: tapped),
+                        CalculatorQuestion3(selected: selected, tapped: tapped),
+                        CalculatorQuestion4(selected: selected, tapped: tapped),
+                        CalculatorQuestion5(selected: selected, tapped: tapped),
+                        CalculatorQuestion6(selected: selected, tapped: tapped),
+                        CalculatorQuestion7(selected: selected, tapped: tapped),
+                        CalculatorQuestion8(selected: selected, tapped: tapped),
+                      ],
+                    ),
                   ),
                 ),
               ),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   selected = [false, false, false, false, false, false];
                   setState(() {});
 
@@ -150,28 +141,47 @@ class _CalculatorQuestionPageState extends State<CalculatorQuestionPage> {
                     page = pageController.page! + 1;
                     setState(() {});
                     pageController.nextPage(duration: 300.milliseconds, curve: Curves.linear);
-                  } else {
+                  } else if (FirebaseAuth.instance.currentUser != null) {
                     FirebaseAuth fireAuth = FirebaseAuth.instance;
+
                     Future<QuerySnapshot<Map<String, dynamic>>> user = FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get();
                     user.then((value) {
                       FirebaseFirestore.instance.collection('00users').doc(value.docs[0].reference.id).update({'tons': getItCalculator.finalScore});
 
                       context.go('/CustomerDashboard');
                     });
+                  } else {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setDouble('tons', getItCalculator.finalScore);
+
+                    ad.AwesomeDialog(
+                      context: context,
+                      width: 500,
+                      dialogType: ad.DialogType.success,
+                      animType: ad.AnimType.rightSlide,
+                      title: 'Your score is ${getItCalculator.finalScore}',
+                      desc: 'Please login to save your score',
+                      btnCancelOnPress: () {},
+                      btnOkText: 'Login',
+                      btnOkOnPress: () {
+                        context.go('/login');
+                      },
+                    )..show();
                   }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0, vertical: 20),
-                  child: Image(
-                    image: AssetImage('images/ui/Calculator/nextBtn.png'),
+                  child: Image.asset(
+                    'images/ui/Calculator/nextBtn.png',
+                    scale: screenSize.width > 750 ? 4 : 1,
                   ),
                 ),
               )
             ],
           ),
           Positioned(
-            right: 10,
-            top: 20,
+            right: screenSize.width > 750 ? 30 : 10,
+            top: screenSize.width > 750 ? 30 : 20,
             child: GestureDetector(
               onTap: () {
                 getItCalculator.finalScore = 0;

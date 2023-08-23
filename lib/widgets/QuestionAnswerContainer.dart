@@ -13,35 +13,43 @@ class CalcQuestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: Offset(3, 0),
-        end: Offset.zero,
-      ).animate(animationController),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 38.0),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(10),
+    var screenSize = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: Offset(3, 0),
+          end: Offset.zero,
+        ).animate(animationController),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 38.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x40000000),
+                  offset: Offset(0, 4),
+                  blurRadius: 4.0,
+                )
+              ],
+              color: Colors.white,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x40000000),
-                offset: Offset(0, 4),
-                blurRadius: 4.0,
-              )
-            ],
-            color: Colors.white,
-          ),
-          height: 50,
-          child: Center(
+            height: screenSize.width > 750 ? 55 : 50,
+            child: Center(
               child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(title),
-          )),
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  title,
+                  style: TextStyle(fontSize: screenSize.width > 750 ? 20 : 16),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -72,9 +80,10 @@ class CalcAnswer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return SlideTransition(
       position: Tween<Offset>(
-        begin: Offset(8, 0),
+        begin: Offset(11, 0),
         end: Offset.zero,
       ).animate(animationController2),
       child: GestureDetector(
@@ -101,13 +110,14 @@ class CalcAnswer extends StatelessWidget {
             ),
             duration: 500.milliseconds,
             curve: Curves.easeOut,
-            height: 40,
+            height: screenSize.width > 750 ? 50 : 40,
             width: width,
             child: Center(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 title,
+                style: TextStyle(fontSize: screenSize.width > 750 ? 18 : 16),
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),

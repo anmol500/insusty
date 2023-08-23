@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:insusty/Util/Locator.dart';
+import 'package:insusty/widgets/Header.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -53,25 +54,25 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       }
                     }),
                 DrawerMenu(
-                    name: 'Offset',
+                    name: 'Subscription',
                     onTap: () {
                       getItPages.setUrlPath('/Offset');
                       context.go('/Offset');
                     }),
                 DrawerMenu(
-                    name: 'Discover',
+                    name: 'Brand',
                     onTap: () {
-                      getItPages.setUrlPath('/DiscoverPage');
-                      context.go('/DiscoverPage');
+                      getItPages.setUrlPath('/BrandPage');
+                      context.go('/BrandPage');
                     }),
                 DrawerMenu(
-                    name: 'Know More',
+                    name: 'About us',
                     onTap: () {
                       getItPages.setUrlPath('/KnowMorePage');
                       context.go('/KnowMorePage');
                     }),
                 DrawerMenu(
-                    name: 'B2B APIs',
+                    name: 'For business',
                     onTap: () {
                       getItPages.setUrlPath('/b2b');
                       context.go('/b2b');
@@ -110,6 +111,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         name: 'Log Out',
                         icon: Icons.logout_rounded,
                         onTap: () async {
+                          getItPages.setHeaderOpacity(1);
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.setString('userEmail', '');
                           FirebaseAuth.instance.signOut();
@@ -141,6 +143,7 @@ class DrawerMenu extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(14.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon == null
                 ? Container()

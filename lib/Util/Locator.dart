@@ -10,10 +10,16 @@ void setup() {
   getIt.registerSingleton<Calculator>(Calculator());
 }
 
-class Pages {
+class Pages extends ChangeNotifier {
   var urlPath = '/';
   var drawerOnUrl;
   var individual = true;
+  var headerOpacity = 1.0;
+
+  setHeaderOpacity(op) {
+    headerOpacity = op;
+    notifyListeners();
+  }
 
   setUrlPath(url) {
     urlPath = url;

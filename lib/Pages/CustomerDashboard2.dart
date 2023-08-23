@@ -234,9 +234,9 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              LinearLine(screenSize: screenSize, color: Colors.orange, title: 'Your Carbon Footprint', percentage: 80, tons: tons),
-                              LinearLine(screenSize: screenSize, color: Colors.cyanAccent, title: 'Avg France', percentage: 70, tons: 6.8),
-                              LinearLine(screenSize: screenSize, color: Colors.greenAccent, title: 'Avg World', percentage: 30, tons: 4.2),
+                              LinearLine(screenSize: screenSize, color: Color(0xffFF9458), title: 'Your Carbon Footprint', percentage: 80, tons: tons),
+                              LinearLine(screenSize: screenSize, color: Color(0xff82A3F6), title: 'Avg France', percentage: 70, tons: 6.8),
+                              LinearLine(screenSize: screenSize, color: Color(0xff75C933), title: 'Avg World', percentage: 30, tons: 4.2),
                             ],
                           ),
                         ),

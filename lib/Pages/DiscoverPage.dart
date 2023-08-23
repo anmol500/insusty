@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_next/views/next_grid_view.dart';
 import 'package:flutter_next/widgets/next_grid_item.dart';
 
-class DiscoverPage extends StatelessWidget {
-  const DiscoverPage({Key? key}) : super(key: key);
+class BrandPage extends StatelessWidget {
+  const BrandPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class DiscoverPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           child: Text(
-            'Discover',
+            'Brand',
             style: TextStyle(
               fontFamily: 'nt',
               color: Color(0xff00370F),

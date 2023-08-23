@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -116,213 +118,241 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-            20.height,
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: TextField(
-                onTap: checking,
-                onChanged: (v) => numLockF(v),
-                controller: email,
-                decoration: InputDecoration(
-                    hintText: 'Your@email.com',
-                    hintStyle: TextStyle(
-                      fontFamily: 'nt',
+              padding: EdgeInsets.symmetric(horizontal: screenSize.width > 750 ? 400 : 0),
+              child: Column(
+                children: [
+                  20.height,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: TextField(
+                      onTap: checking,
+                      onChanged: (v) => numLockF(v),
+                      controller: email,
+                      decoration: InputDecoration(
+                          hintText: 'Your@email.com',
+                          hintStyle: TextStyle(
+                            fontFamily: 'nt',
+                          ),
+                          filled: true,
+                          fillColor: Color(0xffECECEC),
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          )),
                     ),
-                    filled: true,
-                    fillColor: Color(0xffECECEC),
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: Colors.black,
+                  ),
+                  30.height,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: TextField(
+                      onTap: handsUp,
+                      controller: pass,
+                      decoration: InputDecoration(
+                          hintText: 'Pas****d',
+                          hintStyle: TextStyle(
+                            fontFamily: 'nt',
+                          ),
+                          filled: true,
+                          fillColor: Color(0xffECECEC),
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          )),
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none,
-                    )),
-              ),
-            ),
-            30.height,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: TextField(
-                onTap: handsUp,
-                controller: pass,
-                decoration: InputDecoration(
-                    hintText: 'Pas****d',
-                    hintStyle: TextStyle(
-                      fontFamily: 'nt',
+                  ),
+                  25.height,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                    child: Text(
+                      'Forget Password?',
+                      style: TextStyle(
+                        fontFamily: 'nt',
+                        color: Color(0xff208207),
+                        fontSize: 15,
+                      ),
                     ),
-                    filled: true,
-                    fillColor: Color(0xffECECEC),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Colors.black,
+                  ),
+                  10.height,
+                  InkWell(
+                    onTap: () async {
+                      pressed = true;
+                      setState(() {});
+                      if (email.text == 'admin' && pass.text == 'admin') {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setString('userEmail', email.text);
+
+                        context.go('/AdminDashboard');
+                      } else {
+                        try {
+                          FirebaseAuth fireAuth = FirebaseAuth.instance;
+                          await fireAuth.signInWithEmailAndPassword(
+                            email: email.text,
+                            password: pass.text,
+                          );
+
+                          await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get().then((value) async {
+                            isHandsUp.change(false);
+                            isChecking.change(false);
+                            trigSuccess.fire();
+                            await 2.seconds.delay;
+
+                            value.docs[0]['individual'] == true ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
+
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setString('userEmail', email.text);
+                            await prefs.setBool('individual', value.docs[0]['individual']);
+
+                            snackBar(context, title: 'Welcome Back! ${fireAuth.currentUser!.displayName} ', backgroundColor: Color(0xff70ae05));
+                          });
+
+                          pressed = false;
+                          setState(() {});
+                        } on FirebaseAuthException catch (e) {
+                          isHandsUp.change(false);
+                          isChecking.change(false);
+                          trigFail.change(true);
+                          await 2.seconds.delay;
+                          if (e.code == 'user-not-found') {
+                            snackBar(context, title: 'No user found for that email.');
+                          } else if (e.code == 'wrong-password') {
+                            snackBar(context, title: 'Wrong password provided for that user.');
+                          }
+                          pressed = false;
+                          setState(() {});
+                        }
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 38.0, vertical: 25),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          gradient: ll.LinearGradient(
+                            colors: [
+                              Color(0xff459268),
+                              Color(0xff6A8856),
+                            ],
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: pressed ? 10 : 18),
+                          child: Center(
+                            child: pressed
+                                ? CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text(
+                                    'Log In',
+                                    style: TextStyle(
+                                      fontFamily: 'nt',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ),
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none,
-                    )),
-              ),
-            ),
-            25.height,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 45.0),
-              child: Text(
-                'Forget Password?',
-                style: TextStyle(
-                  fontFamily: 'nt',
-                  color: Color(0xff208207),
-                  fontSize: 15,
-                ),
-              ),
-            ),
-            10.height,
-            InkWell(
-              onTap: () async {
-                pressed = true;
-                setState(() {});
-                if (email.text == 'admin' && pass.text == 'admin') {
-                  final prefs = await SharedPreferences.getInstance();
-                  await prefs.setString('userEmail', email.text);
-
-                  context.go('/AdminDashboard');
-                } else {
-                  try {
-                    FirebaseAuth fireAuth = FirebaseAuth.instance;
-                    await fireAuth.signInWithEmailAndPassword(
-                      email: email.text,
-                      password: pass.text,
-                    );
-
-                    await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get().then((value) async {
-                      isHandsUp.change(false);
-                      isChecking.change(false);
-                      trigSuccess.fire();
-                      await 2.seconds.delay;
-
-                      value.docs[0]['individual'] == true ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
-
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).go('/signUp');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                      child: Text(
+                        'Don’t have an account? Sign Up',
+                        style: TextStyle(
+                          fontFamily: 'nt',
+                          color: Color(0xff208207),
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  12.height,
+                  Row(children: <Widget>[
+                    Expanded(
+                      child: new Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Divider(
+                            color: Color(0xff4B4B4B),
+                            height: 36,
+                            thickness: 0.3,
+                          )),
+                    ),
+                    Text(
+                      'Or',
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, letterSpacing: 3, fontSize: 13, fontFamily: 'nt'),
+                    ),
+                    Expanded(
+                      child: new Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Divider(
+                            color: Color(0xff4B4B4B),
+                            height: 36,
+                            thickness: 0.3,
+                          )),
+                    ),
+                  ]),
+                  GestureDetector(
+                    onTap: () async {
+                      GoogleAuthProvider googleProvider = GoogleAuthProvider();
                       final prefs = await SharedPreferences.getInstance();
-                      await prefs.setString('userEmail', email.text);
-                      await prefs.setBool('individual', value.docs[0]['individual']);
 
-                      snackBar(context, title: 'Welcome Back! ${fireAuth.currentUser!.displayName} ', backgroundColor: Color(0xff70ae05));
-                    });
+                      FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-                    pressed = false;
-                    setState(() {});
-                  } on FirebaseAuthException catch (e) {
-                    isHandsUp.change(false);
-                    isChecking.change(false);
-                    trigFail.change(true);
-                    await 2.seconds.delay;
-                    if (e.code == 'user-not-found') {
-                      snackBar(context, title: 'No user found for that email.');
-                    } else if (e.code == 'wrong-password') {
-                      snackBar(context, title: 'Wrong password provided for that user.');
-                    }
-                    pressed = false;
-                    setState(() {});
-                  }
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 38.0, vertical: 25),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    gradient: ll.LinearGradient(
-                      colors: [
-                        Color(0xff459268),
-                        Color(0xff6A8856),
-                      ],
+                      var user = (await firebaseAuth.signInWithPopup(googleProvider)).user;
+                      await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: user?.email).get().then((value) {
+                        print(value.docs);
+                        if (value.docs.length == 0)
+                          FirebaseFirestore.instance.collection('00users').add({
+                            'full_name': user?.displayName, // John Doe
+                            "email": user?.email,
+                            'password': 'google',
+                            'points': 0,
+                            'tons': prefs.getDouble('tons') ?? 0,
+                            'dayleft': 0,
+                            'apiKey': '',
+                            'plan': 'none',
+                            'individual': true,
+                            'refer_link': user!.email!.split('@').first.replaceAll(new RegExp(r'[^\w\s]+'), '') + Random().nextInt(20).toString(),
+                          }).then((value) async {
+                            await prefs.setString('userEmail', firebaseAuth.currentUser!.email.toString());
+
+                            GoRouter.of(context).go('/CustomerDashboard');
+                            snackBar(context, title: 'Welcome To Insusty, ${user?.displayName}!', backgroundColor: Color(0xff70ae05));
+                          });
+
+                        if (prefs.getDouble('tons') != null)
+                          value.docs.first.reference.update(
+                            {'tons': prefs.getDouble('tons')},
+                          );
+                      });
+                      await prefs.setBool('individual', true);
+                      GoRouter.of(context).go('/CustomerDashboard');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 38.0),
+                      child: Image.asset(
+                        'images/ui/LoginPage/googleSignin.png',
+                        scale: screenSize.width > 750 ? 4 : 2,
+                      ),
                     ),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: pressed ? 10 : 18),
-                    child: Center(
-                      child: pressed
-                          ? CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : Text(
-                              'Log In',
-                              style: TextStyle(
-                                fontFamily: 'nt',
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                GoRouter.of(context).go('/signUp');
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                child: Text(
-                  'Don’t have an account? Sign Up',
-                  style: TextStyle(
-                    fontFamily: 'nt',
-                    color: Color(0xff208207),
-                    fontSize: 15,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            12.height,
-            Row(children: <Widget>[
-              Expanded(
-                child: new Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Divider(
-                      color: Color(0xff4B4B4B),
-                      height: 36,
-                      thickness: 0.3,
-                    )),
-              ),
-              Text(
-                'Or',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, letterSpacing: 3, fontSize: 13, fontFamily: 'nt'),
-              ),
-              Expanded(
-                child: new Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Divider(
-                      color: Color(0xff4B4B4B),
-                      height: 36,
-                      thickness: 0.3,
-                    )),
-              ),
-            ]),
-            GestureDetector(
-              onTap: () {
-                Future<UserCredential> signInWithGoogle() async {
-                  // Create a new provider
-                  GoogleAuthProvider googleProvider = GoogleAuthProvider();
-
-                  googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-
-                  // Once signed in, return the UserCredential
-                  return await FirebaseAuth.instance.signInWithPopup(googleProvider);
-
-                  // Or use signInWithRedirect
-                  // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
-                }
-
-                signInWithGoogle();
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 38.0),
-                child: Image.asset(
-                  'images/ui/LoginPage/googleSignin.png',
-                  height: screenSize.height / 12,
-                ),
+                  40.height,
+                ],
               ),
             ),
           ],

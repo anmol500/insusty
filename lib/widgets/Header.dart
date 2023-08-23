@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:widget_size/widget_size.dart';
 
 import '../Util/Locator.dart';
+import 'DrawerMenuDesktop.dart';
 
 class Header extends StatefulWidget {
   const Header({Key? key, this.child}) : super(key: key);
@@ -14,32 +18,70 @@ class Header extends StatefulWidget {
 
 class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
+  bool isReady = false;
+  var prefs;
+
+  double opacityLevel = 1.0; // Fully visible
+
+  void fadeRow() {
+    if (opacityLevel == 0) {
+      opacityLevel = 1.0;
+      getItPages.headerOpacity = 1.0;
+    } else {
+      opacityLevel = 0.0; // Fully transparent
+      getItPages.headerOpacity = 0.0;
+    }
+  }
+
+  getPref() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isReady = true;
+    });
+  }
 
   var color = [
     Color(0xffFFFCF2),
     Color(0xffECF8DE),
     Color(0xffD9F9B0),
   ];
+
   @override
   void initState() {
-    // TODO: implement initState
+    getPref();
     super.initState();
-    // getItPages.addListener(() {
-    //   setState(() {});
-    // });
-
     animationController = AnimationController(vsync: this, duration: 500.milliseconds);
+
+    getItPages.addListener(() {
+      setState(() {
+        fadeRow();
+      });
+    });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     animationController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final List<String> images = [
+      "images/ui/Calculator/CalcChooseCountry.png",
+      "images/ui/offset.png",
+      "images/ui/Contact Us.png",
+      "images/ui/Discover.png",
+      "images/ui/Blogs.png",
+      'images/logo.png',
+      "images/ui/Calculator/CalcChooseCountryDesktop.png",
+    ];
+
+    // Pre-cache images
+    for (String imageUrl in images) {
+      precacheImage(AssetImage(imageUrl), context);
+    }
+
     if (getItPages.urlPath != '/drawer') {
       color = [
         Color(0xffFFFCF2),
@@ -60,27 +102,27 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
         decoration: BoxDecoration(
           image: getItPages.urlPath == '/CalcChooseCountry'
               ? DecorationImage(
-                  image: AssetImage("images/ui/Calculator/CalcChooseCountry.png"),
+                  image: AssetImage(screenSize.width < 750 ? images[0] : images[6]),
                   fit: BoxFit.fill,
                 )
               : getItPages.urlPath == '/Offset'
                   ? DecorationImage(
-                      image: AssetImage("images/ui/offset.png"),
+                      image: AssetImage(images[1]),
                       fit: BoxFit.fill,
                     )
                   : getItPages.urlPath == '/ContactUs'
                       ? DecorationImage(
-                          image: AssetImage("images/ui/Contact Us.png"),
+                          image: AssetImage(images[2]),
                           fit: BoxFit.fill,
                         )
-                      : getItPages.urlPath == '/DiscoverPage'
+                      : getItPages.urlPath == '/BrandPage'
                           ? DecorationImage(
-                              image: AssetImage("images/ui/Discover.png"),
+                              image: AssetImage(images[3]),
                               fit: BoxFit.fill,
                             )
                           : getItPages.urlPath == '/BlogPage'
                               ? DecorationImage(
-                                  image: AssetImage("images/ui/Blogs.png"),
+                                  image: AssetImage(images[4]),
                                   fit: BoxFit.fill,
                                 )
                               : null,
@@ -105,15 +147,88 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                       context.go('/');
                     },
                     child: Image.asset(
-                      'images/logo.png',
+                      images[5],
                       height: screenSize.height / (screenSize.width > 400 ? 12 : 18),
                     ),
                   ),
+                  screenSize.width > 750
+                      ? AnimatedOpacity(
+                          opacity: opacityLevel,
+                          duration: Duration(milliseconds: 400),
+                          child: Row(
+                            children: [
+                              DrawerMenuDesktop(
+                                name: 'Home',
+                                onTap: () {
+                                  getItPages.setUrlPath('/');
+                                  context.go('/');
+                                },
+                                isActive: getItPages.urlPath == "/",
+                              ),
+                              DrawerMenuDesktop(
+                                name: 'Subscription',
+                                onTap: () {
+                                  getItPages.setUrlPath('/Offset');
+                                  context.go('/Offset');
+                                },
+                                isActive: getItPages.urlPath == "/Offset",
+                              ),
+                              DrawerMenuDesktop(
+                                name: 'Brand',
+                                onTap: () {
+                                  getItPages.setUrlPath('/BrandPage');
+                                  context.go('/BrandPage');
+                                },
+                                isActive: getItPages.urlPath == "/BrandPage",
+                              ),
+                              DrawerMenuDesktop(
+                                name: 'Blogs',
+                                onTap: () {
+                                  getItPages.setUrlPath('/BlogPage');
+                                  context.go('/BlogPage');
+                                },
+                                isActive: getItPages.urlPath == "/BlogPage",
+                              ),
+                              DrawerMenuDesktop(
+                                name: 'Contact Us',
+                                onTap: () {
+                                  getItPages.setUrlPath('/ContactUs');
+                                  context.go('/ContactUs');
+                                },
+                                isActive: getItPages.urlPath == "/ContactUs",
+                              ),
+                              isReady
+                                  ? DrawerMenuDesktop(
+                                      name: FirebaseAuth.instance.currentUser != null || (prefs.getString('userEmail') == 'admin') ? 'Dashboard' : 'Login',
+                                      onTap: () async {
+                                        if (FirebaseAuth.instance.currentUser == null && (prefs.getString('userEmail') != 'admin')) {
+                                          getItPages.setUrlPath('/login');
+                                          context.go('/login');
+                                        } else {
+                                          var individual;
+
+                                          individual = prefs.getBool('individual');
+                                          if (prefs.getString('userEmail') == 'admin') {
+                                            context.go('/AdminDashboard');
+                                          } else {
+                                            individual ? context.go('/CustomerDashboard') : context.go('/BusinessDashboard');
+                                          }
+                                        }
+                                      },
+                                      isActive: getItPages.urlPath == "/login" || getItPages.urlPath == "/AdminDashboard" || getItPages.urlPath == "/CustomerDashboard" || getItPages.urlPath == "/BusinessDashboard",
+                                    )
+                                  : Container(),
+                              SizedBox(
+                                height: screenSize.height / 20,
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
                   GestureDetector(
                     onTap: () {
-                      print(getItPages.urlPath);
+                      fadeRow();
 
-                      print(Uri.base.toString().replaceAll(Uri.base.origin, ''));
                       if (getItPages.urlPath == '/drawer') {
                         getItPages.urlPath = getItPages.drawerOnUrl;
                         context.go(getItPages.drawerOnUrl);
@@ -134,9 +249,6 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: screenSize.height / 40,
             ),
             Expanded(child: widget.child)
           ],

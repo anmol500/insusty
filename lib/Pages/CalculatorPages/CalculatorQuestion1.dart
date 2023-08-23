@@ -78,8 +78,9 @@ class _CalculatorQuestion1State extends State<CalculatorQuestion1> with TickerPr
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(18.0),
+      padding: EdgeInsets.all(18.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

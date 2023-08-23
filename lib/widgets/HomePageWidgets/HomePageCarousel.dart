@@ -12,8 +12,8 @@ class HomePageOffsetCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return SizedBox(
-      height: screenSize.width > 400 ? 550 : 350,
-      child: screenSize.width > 400
+      height: screenSize.width > 750 ? 550 : 350,
+      child: screenSize.width > 700
           ? Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -22,6 +22,7 @@ class HomePageOffsetCarousel extends StatelessWidget {
                     child: Image.asset(
                       'images/ui/HomePage/carousel0.png',
                       fit: BoxFit.contain,
+                      scale: 2.6,
                     ),
                     onTap: () {
                       getItPages.setUrlPath('/Offset');
@@ -46,6 +47,7 @@ class HomePageOffsetCarousel extends StatelessWidget {
                     child: Image.asset(
                       'images/ui/HomePage/carousel2.png',
                       fit: BoxFit.contain,
+                      scale: 2.6,
                     ),
                   ),
                 ],

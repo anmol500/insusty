@@ -6,11 +6,12 @@ class NewUserHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return CarouselSlider(
       options: CarouselOptions(
-        aspectRatio: 1.22,
-        enlargeFactor: .1,
-        viewportFraction: 0.45,
+        aspectRatio: screenSize.width > 750 ? 3.5 : 1.22,
+        enlargeFactor: screenSize.width > 750 ? .09 : .1,
+        viewportFraction: screenSize.width > 750 ? 0.19 : 0.45,
         autoPlay: true,
         enlargeCenterPage: true,
       ),

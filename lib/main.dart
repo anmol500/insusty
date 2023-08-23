@@ -12,7 +12,6 @@ import 'package:insusty/Pages/CustomerDashboard2.dart';
 import 'package:insusty/Pages/PrivacyPolicy.dart';
 import 'package:insusty/Pages/ThankYouPage.dart';
 import 'package:insusty/widgets/CustomDrawer.dart';
-import 'package:insusty/Pages/DiscoverPage.dart';
 import 'package:insusty/Pages/FAQ_Page.dart';
 import 'package:insusty/Pages/HomePage.dart';
 import 'package:insusty/Pages/KnowMorePage.dart';
@@ -25,6 +24,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'Pages/BusinessOffsetPage.dart';
 import 'Pages/CalculatorPages/CalcChooseCountry.dart';
+import 'Pages/DiscoverPage.dart';
 import 'Util/Locator.dart';
 import 'firebase_options.dart';
 
@@ -109,8 +109,8 @@ class MyApp extends StatelessWidget {
                 pageBuilder: (context, state) => customTransition(context, state, HomePage()),
               ),
               GoRoute(
-                path: '/DiscoverPage',
-                pageBuilder: (context, state) => customTransition(context, state, DiscoverPage()),
+                path: '/BrandPage',
+                pageBuilder: (context, state) => customTransition(context, state, BrandPage()),
               ),
               GoRoute(
                 path: '/KnowMorePage',
