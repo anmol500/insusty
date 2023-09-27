@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:widget_size/widget_size.dart';
 
 import '../Util/Locator.dart';
 import 'DrawerMenuDesktop.dart';
