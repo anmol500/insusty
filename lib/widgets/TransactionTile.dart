@@ -39,7 +39,6 @@ class TransactionTile extends StatelessWidget {
                     child: Text(
                       businessName,
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xffffffff),
                         fontSize: 19,
                         fontWeight: FontWeight.bold,
@@ -52,7 +51,6 @@ class TransactionTile extends StatelessWidget {
                   Text(
                     date,
                     style: TextStyle(
-                      fontFamily: 'nt',
                       color: Color(0xffFFF4AB),
                       fontSize: 18,
                     ),
@@ -67,7 +65,6 @@ class TransactionTile extends StatelessWidget {
               Text(
                 '\$ $amount',
                 style: TextStyle(
-                  fontFamily: 'nt',
                   color: Color(0xffffffff),
                   fontSize: 18,
                 ),
@@ -76,7 +73,6 @@ class TransactionTile extends StatelessWidget {
               Text(
                 '🪙 $points',
                 style: TextStyle(
-                  fontFamily: 'nt',
                   color: Color(0xffffffff),
                   fontSize: 18,
                 ),

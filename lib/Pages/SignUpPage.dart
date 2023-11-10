@@ -117,9 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: name,
                       decoration: InputDecoration(
                           hintText: individual ? 'Your Name' : 'Name of your Brand',
-                          hintStyle: TextStyle(
-                            fontFamily: 'nt',
-                          ),
+                          hintStyle: TextStyle(),
                           filled: true,
                           fillColor: Color(0xffECECEC),
                           prefixIcon: Icon(
@@ -139,9 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: email,
                       decoration: InputDecoration(
                           hintText: individual ? 'Your@email.com' : 'Brand@brand.com',
-                          hintStyle: TextStyle(
-                            fontFamily: 'nt',
-                          ),
+                          hintStyle: TextStyle(),
                           filled: true,
                           fillColor: Color(0xffECECEC),
                           prefixIcon: Icon(
@@ -162,9 +158,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: true,
                       decoration: InputDecoration(
                           hintText: 'Enter Password',
-                          hintStyle: TextStyle(
-                            fontFamily: 'nt',
-                          ),
+                          hintStyle: TextStyle(),
                           filled: true,
                           fillColor: Color(0xffECECEC),
                           prefixIcon: Icon(
@@ -185,9 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: true,
                       decoration: InputDecoration(
                           hintText: 'Confirm Password',
-                          hintStyle: TextStyle(
-                            fontFamily: 'nt',
-                          ),
+                          hintStyle: TextStyle(),
                           filled: true,
                           fillColor: Color(0xffECECEC),
                           prefixIcon: Icon(
@@ -287,7 +279,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 : Text(
                                     'Sign Up',
                                     style: TextStyle(
-                                      fontFamily: 'nt',
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
@@ -305,9 +296,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 45.0),
                       child: Text(
-                        'Don’t have an account? Log in',
+                        'Already have an account? Log in',
                         style: TextStyle(
-                          fontFamily: 'nt',
                           color: Color(0xff208207),
                           fontSize: 15,
                         ),

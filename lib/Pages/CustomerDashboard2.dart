@@ -99,7 +99,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                           Text(
                             'Your annual carbon footprint is',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xffffffff),
                               fontSize: 18,
                             ),
@@ -109,7 +108,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                           Text(
                             tons.toStringAsFixed(2),
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xffffffff),
                               fontSize: 75,
                               fontWeight: FontWeight.bold,
@@ -123,7 +121,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                               Text(
                                 'Tons CO',
                                 style: TextStyle(
-                                  fontFamily: 'nt',
                                   color: Color(0xffffffff),
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -133,7 +130,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                               Text(
                                 '2',
                                 style: TextStyle(
-                                  fontFamily: 'nt',
                                   color: Color(0xffffffff),
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -148,7 +144,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                             child: Text(
                               'By Consumption Category',
                               style: TextStyle(
-                                fontFamily: 'nt',
                                 color: Color(0xffffffff),
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
@@ -221,7 +216,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                           child: Text(
                             'By Consumption Category',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xffffffff),
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
@@ -267,7 +261,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                                 child: Text(
                                   'My Loyalty Points',
                                   style: TextStyle(
-                                    fontFamily: 'nt',
                                     color: Color(0xff2F410F),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
@@ -310,7 +303,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                                       Text(
                                         points.toString(),
                                         style: TextStyle(
-                                          fontFamily: 'nt',
                                           color: Color(0xff0F6D2F),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 60,
@@ -319,7 +311,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                                       Text(
                                         'Points',
                                         style: TextStyle(
-                                          fontFamily: 'nt',
                                           color: Color(0xff0F6D2F),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 30,
@@ -348,7 +339,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                           child: Text(
                             'Recent Transactions',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xffffffff),
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
@@ -410,7 +400,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                                                             ? 'View Less'
                                                             : "View More",
                                                     style: TextStyle(
-                                                      fontFamily: 'nt',
                                                       color: Colors.black,
                                                       fontSize: 18,
                                                       fontWeight: FontWeight.bold,
@@ -445,7 +434,6 @@ class _CustomerDashboard2State extends State<CustomerDashboard2> {
                           child: Text(
                             'More Option',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xffffffff),
                               fontSize: 22,
                               fontWeight: FontWeight.bold,

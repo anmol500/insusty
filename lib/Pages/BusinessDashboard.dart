@@ -87,7 +87,6 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                       Text(
                         'Dashboard',
                         style: TextStyle(
-                          fontFamily: 'nt',
                           color: Color(0xff00370F),
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -158,7 +157,6 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                       Text(
                         'More Options',
                         style: TextStyle(
-                          fontFamily: 'nt',
                           color: Color(0xff00370F),
                           fontWeight: FontWeight.bold,
                           fontSize: 25,
@@ -176,7 +174,6 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                           child: Text(
                             'API Keys',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xff00370F),
                               fontSize: 20,
                             ),
@@ -195,7 +192,6 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                           child: Text(
                             'API Docs',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xff00370F),
                               fontSize: 20,
                             ),
@@ -217,7 +213,6 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                           child: Text(
                             'Logout',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xff00370F),
                               fontSize: 20,
                             ),

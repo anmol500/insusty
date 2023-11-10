@@ -37,125 +37,130 @@ class _CalcChooseCountryState extends State<CalcChooseCountry> {
         getItPages.setUrlPath('/');
         return true;
       },
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenSize.width > 750 ? 450 : 8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: screenSize.height / 3.4,
-            ),
-            GestureDetector(
-              onTap: () {
-                showCountryPicker(
-                  context: context,
-                  showPhoneCode: false,
-                  showSearch: false,
-                  countryListTheme: CountryListThemeData(
-                    backgroundColor: Colors.white,
-                    textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
-                    bottomSheetHeight: 500,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0),
-                    ),
-                    inputDecoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: const Color(0xFF8C98A8).withOpacity(0.2),
+      child: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage(screenSize.width < 750 ? "images/ui/Calculator/CalcChooseCountry.png" : "images/ui/Calculator/CalcChooseCountryDesktop.png"),
+          fit: BoxFit.fill,
+        )),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenSize.width > 750 ? 450 : 8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: screenSize.height / 3.4,
+              ),
+              GestureDetector(
+                onTap: () {
+                  showCountryPicker(
+                    context: context,
+                    showPhoneCode: false,
+                    showSearch: false,
+                    countryListTheme: CountryListThemeData(
+                      backgroundColor: Colors.white,
+                      textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+                      bottomSheetHeight: 500,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                      inputDecoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: const Color(0xFF8C98A8).withOpacity(0.2),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  onSelect: (Country country) {
-                    this.country = country;
-                    setState(() {});
-                  },
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                child: Card(
-                  elevation: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              country == null ? '🇫🇷' : country.flagEmoji,
-                              style: TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                            20.width,
-                            SizedBox(
-                              width: 160,
-                              child: Text(
-                                country == null ? 'France' : country.displayNameNoCountryCode.toString().splitBefore('('),
-                                overflow: TextOverflow.ellipsis,
+                    onSelect: (Country country) {
+                      this.country = country;
+                      setState(() {});
+                    },
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                  child: Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                country == null ? '🇫🇷' : country.flagEmoji,
                                 style: TextStyle(
-                                  fontFamily: 'nt',
-                                  color: Color(0xff2F410F),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 25,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_drop_down)
-                      ],
-                    ),
-                  ),
-                ).cornerRadiusWithClipRRect(12),
-              ),
-            ),
-            screenSize.width > 750 ? 50.height : 150.height,
-            GestureDetector(
-              onTap: () {
-                context.go('/CalculatorQuestion');
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 75.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 5.0,
-                        offset: Offset(0, 5),
+                              20.width,
+                              SizedBox(
+                                width: 160,
+                                child: Text(
+                                  country == null ? 'France' : country.displayNameNoCountryCode.toString().splitBefore('('),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Color(0xff2F410F),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.arrow_drop_down)
+                        ],
                       ),
-                    ],
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xff208207),
-                        Color(0xff587B0C),
-                      ],
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
-                    child: Center(
-                      child: Text(
-                        'Confirm',
-                        style: TextStyle(
-                          fontFamily: 'nt',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                  ).cornerRadiusWithClipRRect(12),
+                ),
+              ),
+              screenSize.width > 750 ? 50.height : 150.height,
+              GestureDetector(
+                onTap: () {
+                  context.go('/CalculatorQuestion');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 75.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 5.0,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff208207),
+                          Color(0xff587B0C),
+                        ],
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
+                      child: Center(
+                        child: Text(
+                          'Confirm',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

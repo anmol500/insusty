@@ -46,7 +46,6 @@ class _LoginPageState extends State<LoginPage> {
         art.addController(stateMachineController!);
 
         for (SMIInput element in stateMachineController!.inputs) {
-          print(element.name);
           if (element.name == 'isChecking') {
             isChecking = element as SMIBool;
           } else if (element.name == 'numLook') {
@@ -131,9 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: email,
                       decoration: InputDecoration(
                           hintText: 'Your@email.com',
-                          hintStyle: TextStyle(
-                            fontFamily: 'nt',
-                          ),
+                          hintStyle: TextStyle(),
                           filled: true,
                           fillColor: Color(0xffECECEC),
                           prefixIcon: Icon(
@@ -154,9 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: pass,
                       decoration: InputDecoration(
                           hintText: 'Pas****d',
-                          hintStyle: TextStyle(
-                            fontFamily: 'nt',
-                          ),
+                          hintStyle: TextStyle(),
                           filled: true,
                           fillColor: Color(0xffECECEC),
                           prefixIcon: Icon(
@@ -175,7 +170,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       'Forget Password?',
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xff208207),
                         fontSize: 15,
                       ),
@@ -184,8 +178,11 @@ class _LoginPageState extends State<LoginPage> {
                   10.height,
                   InkWell(
                     onTap: () async {
+                      email.text = email.text.trim();
+                      pass.text = pass.text.trim();
                       pressed = true;
                       setState(() {});
+
                       if (email.text == 'admin' && pass.text == 'admin') {
                         final prefs = await SharedPreferences.getInstance();
                         await prefs.setString('userEmail', email.text);
@@ -194,29 +191,38 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         try {
                           FirebaseAuth fireAuth = FirebaseAuth.instance;
-                          await fireAuth.signInWithEmailAndPassword(
-                            email: email.text,
-                            password: pass.text,
-                          );
 
-                          await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: fireAuth.currentUser!.email).get().then((value) async {
+                          await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: email.text).get().then((value) async {
                             isHandsUp.change(false);
                             isChecking.change(false);
                             trigSuccess.fire();
-                            await 2.seconds.delay;
+                            await 1.seconds.delay;
 
-                            value.docs[0]['individual'] == true ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
+                            if (value.docs.isNotEmpty) {
+                              print(value.docs[0]);
+                              if (value.docs[0]['password'] != 'google') {
+                                await fireAuth.signInWithEmailAndPassword(
+                                  email: email.text,
+                                  password: pass.text,
+                                );
 
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString('userEmail', email.text);
-                            await prefs.setBool('individual', value.docs[0]['individual']);
+                                value.docs[0]['individual'] == true ? GoRouter.of(context).go('/CustomerDashboard') : GoRouter.of(context).go('/BusinessDashboard');
 
-                            snackBar(context, title: 'Welcome Back! ${fireAuth.currentUser!.displayName} ', backgroundColor: Color(0xff70ae05));
+                                final prefs = await SharedPreferences.getInstance();
+                                await prefs.setString('userEmail', email.text);
+                                await prefs.setBool('individual', value.docs[0]['individual']);
+
+                                snackBar(context, title: 'Welcome Back! ${fireAuth.currentUser!.displayName} ', backgroundColor: Color(0xff70ae05));
+                              } else {
+                                snackBar(context, title: 'Please sign in using Google sign-in button below ');
+                              }
+                            }
                           });
 
                           pressed = false;
                           setState(() {});
                         } on FirebaseAuthException catch (e) {
+                          print(e);
                           isHandsUp.change(false);
                           isChecking.change(false);
                           trigFail.change(true);
@@ -253,7 +259,6 @@ class _LoginPageState extends State<LoginPage> {
                                 : Text(
                                     'Log In',
                                     style: TextStyle(
-                                      fontFamily: 'nt',
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
@@ -273,7 +278,6 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Don’t have an account? Sign Up',
                         style: TextStyle(
-                          fontFamily: 'nt',
                           color: Color(0xff208207),
                           fontSize: 15,
                         ),
@@ -314,8 +318,10 @@ class _LoginPageState extends State<LoginPage> {
                       FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
                       var user = (await firebaseAuth.signInWithPopup(googleProvider)).user;
+                      isHandsUp.change(false);
+                      isChecking.change(false);
+                      trigSuccess.fire();
                       await FirebaseFirestore.instance.collection('00users').where('email', isEqualTo: user?.email).get().then((value) {
-                        print(value.docs);
                         if (value.docs.length == 0)
                           FirebaseFirestore.instance.collection('00users').add({
                             'full_name': user?.displayName, // John Doe

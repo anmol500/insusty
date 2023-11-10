@@ -70,7 +70,6 @@ class TransactionTileAdmin extends StatelessWidget {
                     Text(
                       "Date:  " + date,
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xffFFF4AB),
                         fontSize: 18,
                       ),
@@ -79,7 +78,6 @@ class TransactionTileAdmin extends StatelessWidget {
                     Text(
                       id,
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xffFFF4AB),
                         fontSize: 18,
                       ),
@@ -94,7 +92,6 @@ class TransactionTileAdmin extends StatelessWidget {
                 Text(
                   '\$ $amount',
                   style: TextStyle(
-                    fontFamily: 'nt',
                     color: Color(0xffffffff),
                     fontSize: 18,
                   ),
@@ -103,7 +100,6 @@ class TransactionTileAdmin extends StatelessWidget {
                 Text(
                   '🪙 $points',
                   style: TextStyle(
-                    fontFamily: 'nt',
                     color: Color(0xffffffff),
                     fontSize: 18,
                   ),

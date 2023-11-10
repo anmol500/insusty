@@ -50,7 +50,6 @@ class SettingsPage extends StatelessWidget {
                     Text(
                       'Settings',
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xff00370F),
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
@@ -80,7 +79,6 @@ class SettingsPage extends StatelessWidget {
             Text(
               fireAuth.currentUser!.displayName.toString(),
               style: TextStyle(
-                fontFamily: 'nt',
                 color: Color(0xff2F900D),
                 fontWeight: FontWeight.bold,
                 fontSize: 25,
@@ -91,7 +89,6 @@ class SettingsPage extends StatelessWidget {
             Text(
               fireAuth.currentUser!.email.toString(),
               style: TextStyle(
-                fontFamily: 'nt',
                 color: Color(0xff53785F),
                 fontWeight: FontWeight.normal,
                 fontSize: 20,
@@ -117,7 +114,6 @@ class SettingsPage extends StatelessWidget {
                     child: Text(
                       'Edit Profile',
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -167,7 +163,6 @@ class SettingMenu extends StatelessWidget {
             Text(
               name,
               style: TextStyle(
-                fontFamily: 'nt',
                 color: Color(0xff00370F),
                 fontWeight: FontWeight.bold,
                 fontSize: 25,

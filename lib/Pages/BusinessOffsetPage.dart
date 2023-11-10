@@ -28,7 +28,6 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
           child: Text(
             'Choose a Plan',
             style: TextStyle(
-              fontFamily: 'nt',
               color: Color(0xff00370F),
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -41,7 +40,6 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
           child: Text(
             'Choose how much of your carbon emissions you would like to offset every month?',
             style: TextStyle(
-              fontFamily: 'nt',
               color: Color(0xff4A7700),
               fontSize: 16,
             ),
@@ -126,7 +124,6 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
           child: Text(
             '✍️',
             style: TextStyle(
-              fontFamily: 'nt',
               color: Color(0xff00370F),
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -139,7 +136,6 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
           child: Text(
             'Developer API Docs',
             style: TextStyle(
-              fontFamily: 'nt',
               color: Color(0xff00370F),
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -169,7 +165,6 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
                   Text(
                     'Learn how to use Insusty API System',
                     style: TextStyle(
-                      fontFamily: 'nt',
                       color: Colors.black,
                       fontSize: 18,
                     ),
@@ -207,7 +202,6 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
                   child: Text(
                     'Continue to Docs',
                     style: TextStyle(
-                      fontFamily: 'nt',
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

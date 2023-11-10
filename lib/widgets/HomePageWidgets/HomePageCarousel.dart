@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:insusty/Util/Locator.dart';
 
+import '../Animations/SlideCustomAnimation.dart';
+import '../Animations/ScaleUpCustomAnimation.dart';
+
 class HomePageOffsetCarousel extends StatelessWidget {
   const HomePageOffsetCarousel({
     super.key,
@@ -18,36 +21,42 @@ class HomePageOffsetCarousel extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  GestureDetector(
-                    child: Image.asset(
-                      'images/ui/HomePage/carousel0.png',
-                      fit: BoxFit.contain,
-                      scale: 2.6,
-                    ),
-                    onTap: () {
-                      getItPages.setUrlPath('/Offset');
-                      context.go('/Offset');
-                    },
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      getItPages.setUrlPath('/Offset');
-                      context.go('/Offset');
-                    },
-                    child: Image.asset(
-                      'images/ui/HomePage/carousel1.png',
-                      fit: BoxFit.contain,
+                  SlideInFromLeftOnVisible(
+                    child: GestureDetector(
+                      child: Image.asset(
+                        'images/ui/HomePage/carousel0.png',
+                        fit: BoxFit.contain,
+                        scale: 2.6,
+                      ),
+                      onTap: () {
+                        getItPages.setUrlPath('/Offset');
+                        context.go('/Offset');
+                      },
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      getItPages.setUrlPath('/Offset');
-                      context.go('/Offset');
-                    },
-                    child: Image.asset(
-                      'images/ui/HomePage/carousel2.png',
-                      fit: BoxFit.contain,
-                      scale: 2.6,
+                  ScaleUpCustomAnimation(
+                    child: GestureDetector(
+                      onTap: () {
+                        getItPages.setUrlPath('/Offset');
+                        context.go('/Offset');
+                      },
+                      child: Image.asset(
+                        'images/ui/HomePage/carousel1.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                  SlideInFromRightOnVisible(
+                    child: GestureDetector(
+                      onTap: () {
+                        getItPages.setUrlPath('/Offset');
+                        context.go('/Offset');
+                      },
+                      child: Image.asset(
+                        'images/ui/HomePage/carousel2.png',
+                        fit: BoxFit.contain,
+                        scale: 2.6,
+                      ),
                     ),
                   ),
                 ],

@@ -108,7 +108,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       Text(
                         'Dashboard',
                         style: TextStyle(
-                          fontFamily: 'nt',
                           color: Color(0xff00370F),
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -220,7 +219,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           child: Text(
                             'Log Out',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 20,

@@ -70,10 +70,10 @@
     <div class="inner">
       <div class="trackbar">
         <ul class="preloader-intro">
-          <li class="preloader-list">Réduire</li>
-          <li class="preloader-list">Compenser</li>
-          <li class="preloader-list">Référer </li>
-          <li class="preloader-list">pour</li>
+          <li class="preloader-list">Green Choices</li>
+          <li class="preloader-list">Eco Rewards</li>
+          <li class="preloader-list">Sustainable Living </li>
+          <li class="preloader-list">Positive Impact!</li>
           <li class="preloader-list">l'impact</li>
           <li class="preloader-list">Reduce</li>
           <li class="preloader-list">Compensate</li>
@@ -117,7 +117,10 @@
           serviceWorkerVersion: serviceWorkerVersion,
         }
       }).then(function(engineInitializer) {
-        return engineInitializer.initializeEngine();
+        return engineInitializer.initializeEngine({
+
+          useColorEmoji: true,
+        });
       }).then(function(appRunner) {
         return appRunner.runApp();
       });

@@ -15,6 +15,7 @@ class Pages extends ChangeNotifier {
   var drawerOnUrl;
   var individual = true;
   var headerOpacity = 1.0;
+  var language = 'eng';
 
   setHeaderOpacity(op) {
     headerOpacity = op;
@@ -23,7 +24,7 @@ class Pages extends ChangeNotifier {
 
   setUrlPath(url) {
     urlPath = url;
-    // notifyListeners();
+    notifyListeners();
   }
 }
 

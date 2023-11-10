@@ -91,7 +91,6 @@ class CarousalWidget extends StatelessWidget {
                                 child: Text(
                                   'Total:',
                                   style: TextStyle(
-                                    fontFamily: 'nt',
                                     color: Colors.black,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -104,7 +103,6 @@ class CarousalWidget extends StatelessWidget {
                                 child: Text(
                                   "€ " + (monthly ? monthlyCost.toString() : yearlyCost.toString()),
                                   style: TextStyle(
-                                    fontFamily: 'nt',
                                     color: Colors.black,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -150,7 +148,6 @@ class CarousalWidget extends StatelessWidget {
                                     : Text(
                                         'Confirm',
                                         style: TextStyle(
-                                          fontFamily: 'nt',
                                           color: Color(0xffffffff),
                                           fontSize: 16,
                                         ),
@@ -178,7 +175,6 @@ class CarousalWidget extends StatelessWidget {
                                 child: Text(
                                   'Cancel',
                                   style: TextStyle(
-                                    fontFamily: 'nt',
                                     color: Color(0xffffffff),
                                     fontSize: 16,
                                   ),
@@ -194,6 +190,7 @@ class CarousalWidget extends StatelessWidget {
               );
             } else {
               ad.AwesomeDialog(
+                width: screenSize.height > 700 ? 500 : null,
                 context: context,
                 dialogType: ad.DialogType.question,
                 animType: ad.AnimType.rightSlide,
@@ -209,6 +206,7 @@ class CarousalWidget extends StatelessWidget {
           });
         } else {
           ad.AwesomeDialog(
+            width: screenSize.height > 700 ? 500 : null,
             context: context,
             dialogType: ad.DialogType.question,
             animType: ad.AnimType.rightSlide,

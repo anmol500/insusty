@@ -81,7 +81,6 @@ class _DrawerMenuDesktopState extends State<DrawerMenuDesktop> with SingleTicker
                   child: Text(
                     widget.name,
                     style: TextStyle(
-                      fontFamily: 'pt',
                       color: widget.isActive ? Color(0xff000903) : Color(0xff00370F),
                       fontSize: 20,
                       fontWeight: widget.isActive ? FontWeight.bold : FontWeight.normal,

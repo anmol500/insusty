@@ -20,14 +20,10 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   bool isReady = false;
   var prefs;
 
-  double opacityLevel = 1.0; // Fully visible
-
   void fadeRow() {
-    if (opacityLevel == 0) {
-      opacityLevel = 1.0;
+    if (getItPages.urlPath != '/drawer') {
       getItPages.headerOpacity = 1.0;
     } else {
-      opacityLevel = 0.0; // Fully transparent
       getItPages.headerOpacity = 0.0;
     }
   }
@@ -39,12 +35,6 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
     });
   }
 
-  var color = [
-    Color(0xffFFFCF2),
-    Color(0xffECF8DE),
-    Color(0xffD9F9B0),
-  ];
-
   @override
   void initState() {
     getPref();
@@ -52,9 +42,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
     animationController = AnimationController(vsync: this, duration: 500.milliseconds);
 
     getItPages.addListener(() {
-      setState(() {
-        fadeRow();
-      });
+      fadeRow();
     });
   }
 
@@ -66,69 +54,23 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> images = [
-      "images/ui/Calculator/CalcChooseCountry.png",
-      "images/ui/offset.png",
-      "images/ui/Contact Us.png",
-      "images/ui/Discover.png",
-      "images/ui/Blogs.png",
-      'images/logo.png',
-      "images/ui/Calculator/CalcChooseCountryDesktop.png",
-    ];
-
-    // Pre-cache images
-    for (String imageUrl in images) {
-      precacheImage(AssetImage(imageUrl), context);
-    }
-
     if (getItPages.urlPath != '/drawer') {
-      color = [
-        Color(0xffFFFCF2),
-        Color(0xffECF8DE),
-        Color(0xffD9F9B0),
-      ];
       animationController.reverse();
     } else {
-      color = [
-        Color(0xffDEEED0),
-        Color(0xffFDED92),
-      ];
       animationController.forward();
     }
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          image: getItPages.urlPath == '/CalcChooseCountry'
-              ? DecorationImage(
-                  image: AssetImage(screenSize.width < 750 ? images[0] : images[6]),
-                  fit: BoxFit.fill,
-                )
-              : getItPages.urlPath == '/Offset'
-                  ? DecorationImage(
-                      image: AssetImage(images[1]),
-                      fit: BoxFit.fill,
-                    )
-                  : getItPages.urlPath == '/ContactUs'
-                      ? DecorationImage(
-                          image: AssetImage(images[2]),
-                          fit: BoxFit.fill,
-                        )
-                      : getItPages.urlPath == '/BrandPage'
-                          ? DecorationImage(
-                              image: AssetImage(images[3]),
-                              fit: BoxFit.fill,
-                            )
-                          : getItPages.urlPath == '/BlogPage'
-                              ? DecorationImage(
-                                  image: AssetImage(images[4]),
-                                  fit: BoxFit.fill,
-                                )
-                              : null,
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: color,
+            colors: [
+              Color(0xffFFFCF2),
+              Color(0xffECF8DE),
+              Color(0xffD9F9B0),
+            ],
           ),
         ),
         child: Column(
@@ -146,13 +88,13 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                       context.go('/');
                     },
                     child: Image.asset(
-                      images[5],
+                      'images/logo.png',
                       height: screenSize.height / (screenSize.width > 400 ? 12 : 18),
                     ),
                   ),
                   screenSize.width > 750
                       ? AnimatedOpacity(
-                          opacity: opacityLevel,
+                          opacity: getItPages.headerOpacity,
                           duration: Duration(milliseconds: 400),
                           child: Row(
                             children: [
@@ -173,18 +115,18 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                                 isActive: getItPages.urlPath == "/Offset",
                               ),
                               DrawerMenuDesktop(
-                                name: 'Brand',
+                                name: 'Business',
                                 onTap: () {
-                                  getItPages.setUrlPath('/BrandPage');
-                                  context.go('/BrandPage');
+                                  getItPages.setUrlPath('/b2b');
+                                  context.go('/b2b');
                                 },
                                 isActive: getItPages.urlPath == "/BrandPage",
                               ),
                               DrawerMenuDesktop(
-                                name: 'Blogs',
+                                name: 'About us',
                                 onTap: () {
-                                  getItPages.setUrlPath('/BlogPage');
-                                  context.go('/BlogPage');
+                                  getItPages.setUrlPath('/KnowMorePage');
+                                  context.go('/KnowMorePage');
                                 },
                                 isActive: getItPages.urlPath == "/BlogPage",
                               ),
@@ -226,14 +168,12 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                       : Container(),
                   GestureDetector(
                     onTap: () {
-                      fadeRow();
-
                       if (getItPages.urlPath == '/drawer') {
-                        getItPages.urlPath = getItPages.drawerOnUrl;
+                        getItPages.setUrlPath(getItPages.drawerOnUrl);
                         context.go(getItPages.drawerOnUrl);
                       } else {
                         getItPages.drawerOnUrl = Uri.base.toString().replaceAll(Uri.base.origin, '');
-                        getItPages.urlPath = '/drawer';
+                        getItPages.setUrlPath('/drawer');
                         context.go('/drawer');
                       }
                     },

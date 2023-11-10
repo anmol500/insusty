@@ -18,7 +18,6 @@ class APIDocs extends StatelessWidget {
           child: Text(
             'Get Started With APIs For Your Business',
             style: TextStyle(
-              fontFamily: 'nt',
               color: Color(0xff0F6D2F),
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -76,7 +75,6 @@ class APIDocs extends StatelessWidget {
                   child: Text(
                     'Go to FastApi Docs to test',
                     style: TextStyle(
-                      fontFamily: 'nt',
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -137,7 +135,7 @@ class CustomAcorrdion extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             question,
-            style: TextStyle(fontFamily: 'nt', color: Color(0xff222F19), fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Color(0xff222F19), fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
         children: [
@@ -146,7 +144,6 @@ class CustomAcorrdion extends StatelessWidget {
             child: Text(
               answer,
               style: TextStyle(
-                fontFamily: 'nt',
                 color: Color(0xff495F3B),
                 fontSize: 16,
               ),

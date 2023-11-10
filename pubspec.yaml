@@ -55,6 +55,8 @@ dependencies:
 
 
 
+
+
 flutter:
 
 
@@ -73,11 +75,12 @@ flutter:
 
 
   fonts:
-    - family: nt
+    - family: newsletter
       fonts:
-        - asset: fonts/NeutraText-Bold.otf
+        - asset: fonts/Newsreader-VariableFont.ttf
+        - asset: fonts/Newsreader-VariableFont.ttf
           weight: 700
-        - asset: fonts/NeutraText-Book.otf
+
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

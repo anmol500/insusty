@@ -26,6 +26,7 @@ import 'Pages/BusinessOffsetPage.dart';
 import 'Pages/CalculatorPages/CalcChooseCountry.dart';
 import 'Pages/DiscoverPage.dart';
 import 'Util/Locator.dart';
+
 import 'firebase_options.dart';
 
 main() async {
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'newsletter',
+      ),
       routerConfig: GoRouter(
         routes: [
           GoRoute(
@@ -106,47 +110,47 @@ class MyApp extends StatelessWidget {
             routes: [
               GoRoute(
                 path: '/',
-                pageBuilder: (context, state) => customTransition(context, state, HomePage()),
+                builder: (context, state) => HomePage(),
               ),
               GoRoute(
                 path: '/BrandPage',
-                pageBuilder: (context, state) => customTransition(context, state, BrandPage()),
+                builder: (context, state) => BrandPage(),
               ),
               GoRoute(
                 path: '/KnowMorePage',
-                pageBuilder: (context, state) => customTransition(context, state, KnowMorePage()),
+                builder: (context, state) => KnowMorePage(),
               ),
               GoRoute(
                 path: '/BlogPage',
-                pageBuilder: (context, state) => customTransition(context, state, BlogPage()),
+                builder: (context, state) => BlogPage(),
               ),
               GoRoute(
                 path: '/ContactUs',
-                pageBuilder: (context, state) => customTransition(context, state, ContactUsPage()),
+                builder: (context, state) => ContactUsPage(),
               ),
               GoRoute(
                 path: '/Offset',
-                pageBuilder: (context, state) => customTransition(context, state, OffsetPage()),
+                builder: (context, state) => OffsetPage(),
               ),
               GoRoute(
                 path: '/b2b',
-                pageBuilder: (context, state) => customTransition(context, state, BusinessOffsetPage()),
+                builder: (context, state) => BusinessOffsetPage(),
               ),
               GoRoute(
                 path: '/APIDocs',
-                pageBuilder: (context, state) => customTransition(context, state, APIDocs()),
+                builder: (context, state) => APIDocs(),
               ),
               GoRoute(
                 path: '/FAQ',
-                pageBuilder: (context, state) => customTransition(context, state, FAQ_Page()),
+                builder: (context, state) => FAQ_Page(),
               ),
               GoRoute(
                 path: '/CalcChooseCountry',
-                pageBuilder: (context, state) => customTransition(context, state, CalcChooseCountry()),
+                builder: (context, state) => CalcChooseCountry(),
               ),
               GoRoute(
                 path: '/drawer',
-                pageBuilder: (context, state) => customTransition(context, state, CustomDrawer()),
+                builder: (context, state) => CustomDrawer(),
               ),
             ],
             builder: (context, state, child) {
@@ -159,15 +163,4 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-}
-
-customTransition(context, state, child) {
-  return CustomTransitionPage(
-    key: state.pageKey,
-    child: child,
-    transitionDuration: 0.milliseconds,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return child;
-    },
-  );
 }

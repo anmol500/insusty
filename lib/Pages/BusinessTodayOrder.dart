@@ -75,7 +75,6 @@ class _BusinessTodayOrderState extends State<BusinessTodayOrder> {
                           child: Text(
                             'No Records',
                             style: TextStyle(
-                              fontFamily: 'nt',
                               color: Color(0xffffffff),
                               fontSize: 19,
                               fontWeight: FontWeight.bold,

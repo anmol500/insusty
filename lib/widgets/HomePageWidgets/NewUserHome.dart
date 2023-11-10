@@ -9,9 +9,9 @@ class NewUserHome extends StatelessWidget {
     var screenSize = MediaQuery.of(context).size;
     return CarouselSlider(
       options: CarouselOptions(
-        aspectRatio: screenSize.width > 750 ? 3.5 : 1.22,
-        enlargeFactor: screenSize.width > 750 ? .09 : .1,
-        viewportFraction: screenSize.width > 750 ? 0.19 : 0.45,
+        aspectRatio: screenSize.width > 750 ? 2.8 : 1.22,
+        enlargeFactor: 0.1,
+        viewportFraction: screenSize.width > 750 ? 0.3 : 0.45,
         autoPlay: true,
         enlargeCenterPage: true,
       ),
@@ -37,6 +37,7 @@ class NewUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Container(
@@ -49,33 +50,32 @@ class NewUserCard extends StatelessWidget {
           children: [
             Image.asset(
               'images/ui/HomePage/newUsers$img.png',
+              scale: 1.2,
             ),
             SizedBox(
-              width: 140,
+              width: screenSize.width > 500 ? 245 : 140,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   name.toString(),
                   style: TextStyle(
                     overflow: TextOverflow.ellipsis,
-                    fontFamily: 'nt',
                     color: Color(0xff4B4B4B),
-                    fontSize: 18,
+                    fontSize: screenSize.width > 500 ? 30 : 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
             SizedBox(
-              width: 140,
+              width: screenSize.width > 500 ? 245 : 140,
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   '${tons.toString()} Tonnes of carbon offset/year',
                   style: TextStyle(
-                    fontFamily: 'nt',
                     color: Color(0xff538D09),
-                    fontSize: 14,
+                    fontSize: screenSize.width > 500 ? 25 : 14,
                   ),
                 ),
               ),
@@ -85,14 +85,14 @@ class NewUserCard extends StatelessWidget {
             //   child: Text(
             //     'Donated €${donation.toString()}',
             //     style: TextStyle(
-            //       fontFamily: 'nt',
+            //
             //       color: Color(0xff538D09),
             //       fontSize: 14,
             //     ),
             //   ),
             // ),
             SizedBox(
-              width: 140,
+              width: screenSize.width > 500 ? 245 : 140,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -100,7 +100,7 @@ class NewUserCard extends StatelessWidget {
                     Icon(
                       Icons.access_time_filled,
                       color: Color(0xff477A09),
-                      size: 14,
+                      size: screenSize.width > 500 ? 25 : 14,
                     ),
                     SizedBox(
                       width: 5,
@@ -108,9 +108,8 @@ class NewUserCard extends StatelessWidget {
                     Text(
                       '${time.toString()} min ago',
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xff538D09),
-                        fontSize: 14,
+                        fontSize: screenSize.width > 500 ? 25 : 14,
                       ),
                     )
                   ],

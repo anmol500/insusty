@@ -32,10 +32,9 @@ class _JoinHomeState extends State<JoinHome> {
                 Text(
                   'You are',
                   style: TextStyle(
-                    fontFamily: 'nt',
                     color: Color(0xff282828),
                     fontWeight: FontWeight.bold,
-                    fontSize: screenSize.width > 750 ? 30 : 20,
+                    fontSize: screenSize.width > 750 ? 35 : 20,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -69,9 +68,8 @@ class _JoinHomeState extends State<JoinHome> {
                         child: Text(
                           value,
                           style: TextStyle(
-                            fontFamily: 'nt',
                             color: Color(0xff282828),
-                            fontSize: screenSize.width > 750 ? 25 : 20,
+                            fontSize: screenSize.width > 750 ? 30 : 20,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -114,7 +112,6 @@ class _JoinHomeState extends State<JoinHome> {
                     child: Text(
                       'Join Now',
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xff2F410F),
                         fontWeight: FontWeight.bold,
                         fontSize: screenSize.width > 750 ? 25 : 16,

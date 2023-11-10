@@ -83,7 +83,6 @@ class _BusinessAPIkeyPageState extends State<BusinessAPIkeyPage> {
                   : Text(
                       apiKey == '' ? 'Generate API' : apiKey,
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xff00370F),
                         fontSize: 20,
                       ),
@@ -122,7 +121,6 @@ class _BusinessAPIkeyPageState extends State<BusinessAPIkeyPage> {
                     child: Text(
                       'Copy',
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -162,7 +160,6 @@ class _BusinessAPIkeyPageState extends State<BusinessAPIkeyPage> {
                     child: Text(
                       'Generate New API key',
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20,

@@ -46,7 +46,6 @@ class BusinessDashboardTiles extends StatelessWidget {
                     Text(
                       title,
                       style: TextStyle(
-                        fontFamily: 'nt',
                         color: Color(0xff00370F),
                         fontWeight: FontWeight.bold,
                         fontSize: 20,

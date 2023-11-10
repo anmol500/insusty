@@ -41,7 +41,6 @@ class LinearLine extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontFamily: 'nt',
                   color: Color(0xffffffff),
                   fontSize: 14,
                 ),
@@ -50,7 +49,6 @@ class LinearLine extends StatelessWidget {
               Text(
                 tons.toStringAsFixed(1) + ' Tons',
                 style: TextStyle(
-                  fontFamily: 'nt',
                   color: Color(0xffffffff),
                   fontSize: 14,
                 ),
