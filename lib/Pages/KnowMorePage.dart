@@ -4,66 +4,84 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../Util/Locator.dart';
 
-class KnowMorePage extends StatelessWidget {
+class KnowMorePage extends StatefulWidget {
   const KnowMorePage({Key? key}) : super(key: key);
+
+  @override
+  State<KnowMorePage> createState() => _KnowMorePageState();
+}
+
+class _KnowMorePageState extends State<KnowMorePage> {
+  double opacityLevel = 1.0;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        opacityLevel = 0.0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    return Container(
-      color: Colors.white,
-      child: ListView(
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Column(
-                children: [
-                  getItPages.language == 'eng'
-                      ? Image.asset(
-                          screenSize.width > 700 ? 'images/ui/AboutUsDesktop.png' : 'images/ui/AboutUs.png',
-                        )
-                      : Image.asset(
-                          screenSize.width > 700 ? 'images/ui/AboutUsDesktopFr.png' : 'images/ui/AboutUsFr.png',
-                        ),
-                  GestureDetector(
-                    onTap: () {
-                      getItPages.setUrlPath('/ContactUs');
-                      context.go('/ContactUs');
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: screenSize.width > 700 ? 100 : 0),
-                      child: getItPages.language == 'eng'
-                          ? Image.asset(
-                              screenSize.width > 700 ? 'images/ui/AboutUsBottom.png' : 'images/ui/AboutUsMobileBottom.png',
-                            )
-                          : Image.asset(
-                              screenSize.width > 700 ? 'images/ui/AboutUsBottomFr.png' : 'images/ui/AboutUsMobileBottomFr.png',
-                            ),
-                    ),
-                  ),
-                  40.height,
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xffF7FFE0),
+                  Color(0xffFEF8DB),
+                  Color(0xffE4F4C9),
+                  Color(0xffB4E8B9),
                 ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-              Positioned(
-                bottom: 10,
-                left: 0,
-                child: GestureDetector(
+            ),
+            child: Column(
+              children: [
+                getItPages.language == 'eng'
+                    ? Image.asset(
+                        screenSize.width > 700 ? 'images/ui/AboutUsDesktop.png' : 'images/ui/AboutUsMobileEng.png',
+                      )
+                    : Image.asset(
+                        screenSize.width > 700 ? 'images/ui/AboutUsDesktopFr.png' : 'images/ui/AboutUsMobileFr.png',
+                      ),
+                GestureDetector(
                   onTap: () {
                     getItPages.setUrlPath('/ContactUs');
                     context.go('/ContactUs');
                   },
-                  child: Container(
-                    height: 500,
-                    width: 500,
-                    color: Colors.transparent,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: screenSize.width > 700 ? 100 : 0),
+                    child: getItPages.language == 'eng'
+                        ? Image.asset(
+                            screenSize.width > 700 ? 'images/ui/AboutUsDesktopBottomEng.png' : 'images/ui/AboutUsMobileBottomEng.png',
+                          )
+                        : Image.asset(
+                            screenSize.width > 700 ? 'images/ui/AboutUsDesktopBottomFr.png' : 'images/ui/AboutUsMobileBottomFr.png',
+                          ),
                   ),
                 ),
-              )
-            ],
+                screenSize.width > 700 ? 40.height : 0.height,
+              ],
+            ),
           ),
-        ],
-      ),
+        ),
+        IgnorePointer(
+          ignoring: opacityLevel == 0.0,
+          child: AnimatedContainer(
+            color: Color(0xffFFFCF2).withOpacity(opacityLevel),
+            duration: 300.milliseconds,
+            height: screenSize.height,
+            width: screenSize.width,
+          ),
+        ),
+      ],
     );
   }
 }

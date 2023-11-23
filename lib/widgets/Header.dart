@@ -120,7 +120,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                                   getItPages.setUrlPath('/b2b');
                                   context.go('/b2b');
                                 },
-                                isActive: getItPages.urlPath == "/BrandPage",
+                                isActive: getItPages.urlPath == "/b2b",
                               ),
                               DrawerMenuDesktop(
                                 name: 'About us',
@@ -128,7 +128,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                                   getItPages.setUrlPath('/KnowMorePage');
                                   context.go('/KnowMorePage');
                                 },
-                                isActive: getItPages.urlPath == "/BlogPage",
+                                isActive: getItPages.urlPath == "/KnowMorePage",
                               ),
                               DrawerMenuDesktop(
                                 name: 'Contact Us',

@@ -77,13 +77,13 @@ class _DrawerMenuDesktopState extends State<DrawerMenuDesktop> with SingleTicker
                         ],
                       ),
                 Container(
-                  width: 120, // Adjust this value
+                  width: 140, // Adjust this value
                   child: Text(
                     widget.name,
                     style: TextStyle(
-                      color: widget.isActive ? Color(0xff000903) : Color(0xff00370F),
+                      color: widget.isActive ? Color(0xff24410D) : Color(0xff5F7A4A),
                       fontSize: 20,
-                      fontWeight: widget.isActive ? FontWeight.bold : FontWeight.normal,
+                      fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -91,20 +91,20 @@ class _DrawerMenuDesktopState extends State<DrawerMenuDesktop> with SingleTicker
               ],
             ),
             3.height,
-            AnimatedBuilder(
-              animation: _lineAnimation,
-              builder: (context, child) {
-                return Transform.translate(
-                  offset: Offset(50 * (1 - _lineAnimation.value), 0), // 50 is half of the width
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 120 * _lineAnimation.value, // Match with the above value
-                    height: 2,
-                    color: widget.isActive ? Color(0xff014f16) : Colors.transparent,
-                  ),
-                );
-              },
-            ),
+            // AnimatedBuilder(
+            //   animation: _lineAnimation,
+            //   builder: (context, child) {
+            //     return Transform.translate(
+            //       offset: Offset(50 * (1 - _lineAnimation.value), 0), // 50 is half of the width
+            //       child: Container(
+            //         alignment: Alignment.center,
+            //         width: 120 * _lineAnimation.value, // Match with the above value
+            //         height: 2,
+            //         color: widget.isActive ? Color(0xff014f16) : Colors.transparent,
+            //       ),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

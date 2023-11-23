@@ -78,8 +78,10 @@ flutter:
     - family: newsletter
       fonts:
         - asset: fonts/Newsreader-VariableFont.ttf
-        - asset: fonts/Newsreader-VariableFont.ttf
+        - asset: fonts/Newsreader_60pt-Bold.ttf
           weight: 700
+        - asset: fonts/Newsreader_60pt-ExtraBold.ttf
+          weight: 900
 
   #         style: italic
   #   - family: Trajan Pro

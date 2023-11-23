@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_web_frame/flutter_web_frame.dart';
 import 'package:go_router/go_router.dart';
 import 'package:insusty/Pages/APIDocs.dart';
@@ -9,6 +12,7 @@ import 'package:insusty/Pages/BusinessDashboard.dart';
 import 'package:insusty/Pages/CalculatorPages/CalculatorQuestionPage.dart';
 import 'package:insusty/Pages/ContactUsPage.dart';
 import 'package:insusty/Pages/CustomerDashboard2.dart';
+import 'package:insusty/Pages/ImpactPage.dart';
 import 'package:insusty/Pages/PrivacyPolicy.dart';
 import 'package:insusty/Pages/ThankYouPage.dart';
 import 'package:insusty/widgets/CustomDrawer.dart';
@@ -20,7 +24,6 @@ import 'package:insusty/Pages/OffsetPage.dart';
 import 'package:insusty/Pages/SettingsPage.dart';
 import 'package:insusty/Pages/SignUpPage.dart';
 import 'package:insusty/widgets/Header.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'Pages/BusinessOffsetPage.dart';
 import 'Pages/CalculatorPages/CalcChooseCountry.dart';
@@ -36,6 +39,8 @@ main() async {
 
   setPathUrlStrategy();
   setup();
+  // Precache images before running the app
+
   runApp(MyApp());
 }
 
@@ -44,6 +49,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   precacheAllImages(context);
+    // });
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -119,6 +127,10 @@ class MyApp extends StatelessWidget {
               GoRoute(
                 path: '/KnowMorePage',
                 builder: (context, state) => KnowMorePage(),
+              ),
+              GoRoute(
+                path: '/ImpactPage',
+                builder: (context, state) => ImpactPage(),
               ),
               GoRoute(
                 path: '/BlogPage',

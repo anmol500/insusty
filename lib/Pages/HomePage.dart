@@ -21,13 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double opacityLevel = 1.0;
-  final List<String> images = [
-    'images/ui/HomePage/homepage1Desktop.png',
-    'images/ui/HomePage/homepage1.png',
-    'images/ui/HomePage/Calculate.png',
-    'images/ui/HomePage/CalculateDesktop.png',
-    'images/ui/HomePage/last.png',
-  ];
+
   @override
   void initState() {
     super.initState();
@@ -58,13 +52,13 @@ class _HomePageState extends State<HomePage> {
                     height: screenSize.height / 30,
                   ),
                   FadeInCustomAnimation(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: screenSize.width > 750 ? 40 : 5),
-                      child: Image.asset(
-                        screenSize.width > 750 ? images[0] : images[1],
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                    child: getItPages.language == 'eng'
+                        ? Image.asset(
+                            screenSize.width > 700 ? 'images/ui/HomePage/HomepageHeroDesktopEng.png' : 'images/ui/HomePage/HomepageHeroMobileEng.png',
+                          )
+                        : Image.asset(
+                            screenSize.width > 700 ? 'images/ui/HomePage/HomepageHeroDesktopFr.png' : 'images/ui/HomePage/HomepageHeroMobileFr.png',
+                          ),
                   ),
                   20.height,
                   FirebaseAuth.instance.currentUser == null
@@ -99,53 +93,21 @@ class _HomePageState extends State<HomePage> {
                   NewUserHome(),
                   10.height,
                   FadeInCustomAnimation(
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(screenSize.width < 750 ? 10 : 58.0),
-                          child: Image.asset(screenSize.width < 750 ? images[2] : images[3]),
-                        ),
-                        Positioned.fill(
-                          bottom: 0,
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: InkWell(
-                              onTap: () {
-                                getItPages.setUrlPath('/CalcChooseCountry');
-                                context.go('/CalcChooseCountry');
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xff2D9F54),
-                                  borderRadius: BorderRadius.circular(7),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 5.0,
-                                    )
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: screenSize.width > 750 ? 44 : 18.0,
-                                    vertical: 12.0,
-                                  ),
-                                  child: Text(
-                                    'Get Started',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: screenSize.width < 750 ? 12 : 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
+                    child: GestureDetector(
+                      onTap: () {
+                        getItPages.setUrlPath('/CalcChooseCountry');
+                        context.go('/CalcChooseCountry');
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(screenSize.width < 700 ? 10 : 58.0),
+                        child: getItPages.language == 'eng'
+                            ? Image.asset(
+                                screenSize.width > 700 ? 'images/ui/HomePage/CalculateDesktopEng.png' : 'images/ui/HomePage/CalculateMobileEng.png',
+                              )
+                            : Image.asset(
+                                screenSize.width > 700 ? 'images/ui/HomePage/CalculateDesktopFr.png' : 'images/ui/HomePage/CalculateMobileFr.png',
                               ),
-                            ),
-                          ),
-                        )
-                      ],
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -155,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: EdgeInsets.all(5),
                       child: Image.asset(
-                        images[4],
+                        'images/ui/HomePage/last.png',
                         fit: BoxFit.contain,
                       ),
                     ),

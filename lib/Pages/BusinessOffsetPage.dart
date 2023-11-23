@@ -22,52 +22,33 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
     var screenSize = MediaQuery.of(context).size;
     return ListView(
       children: [
-        20.height,
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
-          child: Text(
-            'Choose a Plan',
-            style: TextStyle(
-              color: Color(0xff00370F),
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
+        getItPages.language == 'eng'
+            ? Image.asset(
+                screenSize.width > 700 ? 'images/ui/BusinessApiDesktopEng.png' : 'images/ui/BusinessApiMobileEng.png',
+              )
+            : Image.asset(
+                screenSize.width > 700 ? 'images/ui/BusinessApiDesktopFr.png' : 'images/ui/BusinessApiMobileFr.png',
+              ),
+        Container(
+          height: screenSize.width > 700 ? 550 : 350,
+          padding: EdgeInsets.symmetric(vertical: screenSize.width > 700 ? 50 : 30),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                screenSize.width > 700 ? Color(0xffF3FDD8) : Color(0xffF7FBD0),
+                Color(0xffD9F9B0),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
-            textAlign: TextAlign.center,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Text(
-            'Choose how much of your carbon emissions you would like to offset every month?',
-            style: TextStyle(
-              color: Color(0xff4A7700),
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        SizedBox(
-          height: 350,
           child: CarouselSlider(
             options: CarouselOptions(
               autoPlay: true,
               aspectRatio: 1.0,
-              viewportFraction: 0.5,
-              enlargeCenterPage: true,
+              viewportFraction: screenSize.width > 700 ? 0.23 : 0.67,
             ),
             items: [
-              CarousalWidget(
-                monthly: monthly,
-                asset: 'images/ui/business2.png',
-                screenSize: screenSize,
-                monthlyCost: 699,
-                yearlyCost: 8388,
-                monthlyCostAPI: 'price_1Mb7tULiMJsqTuQlQjvqC3Go',
-                yearlyCostAPI: 'price_1Mb7tULiMJsqTuQlMt0JFV7j',
-                name: 'MID GREENS',
-                points: 0,
-                individual: false,
-              ),
               CarousalWidget(
                 monthly: monthly,
                 asset: 'images/ui/business1.png',
@@ -77,6 +58,18 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
                 monthlyCostAPI: 'price_1Mb7vwLiMJsqTuQlILDmWi6X',
                 yearlyCostAPI: 'price_1Mb7vwLiMJsqTuQlIL5l2US6',
                 name: 'ECO STARTER',
+                points: 0,
+                individual: false,
+              ),
+              CarousalWidget(
+                monthly: monthly,
+                asset: 'images/ui/business2.png',
+                screenSize: screenSize,
+                monthlyCost: 699,
+                yearlyCost: 8388,
+                monthlyCostAPI: 'price_1Mb7tULiMJsqTuQlQjvqC3Go',
+                yearlyCostAPI: 'price_1Mb7tULiMJsqTuQlMt0JFV7j',
+                name: 'MID GREENS',
                 points: 0,
                 individual: false,
               ),
@@ -92,125 +85,19 @@ class _BusinessOffsetPageState extends State<BusinessOffsetPage> {
                 points: 0,
                 individual: false,
               ),
+              CarousalWidget(
+                monthly: monthly,
+                asset: 'images/ui/business4.png',
+                screenSize: screenSize,
+                monthlyCost: 1499,
+                yearlyCost: 17988,
+                monthlyCostAPI: 'price_1Mb7wWLiMJsqTuQl9yUWDV4M',
+                yearlyCostAPI: 'price_1Mb7wWLiMJsqTuQltRuWrx2O',
+                name: 'ECO GIANTS',
+                points: 0,
+                individual: false,
+              ),
             ],
-          ),
-        ),
-        Row(children: <Widget>[
-          Expanded(
-            child: new Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Divider(
-                  color: Color(0xff4B4B4B),
-                  height: 36,
-                  thickness: 0.3,
-                )),
-          ),
-          Text(
-            'API Docs',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, letterSpacing: 3, fontSize: 13, fontFamily: 'nt'),
-          ),
-          Expanded(
-            child: new Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Divider(
-                  color: Color(0xff4B4B4B),
-                  height: 36,
-                  thickness: 0.3,
-                )),
-          ),
-        ]),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
-          child: Text(
-            '✍️',
-            style: TextStyle(
-              color: Color(0xff00370F),
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(
-            'Developer API Docs',
-            style: TextStyle(
-              color: Color(0xff00370F),
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0xffc1c1c1),
-                  blurRadius: 10.0,
-                  offset: Offset(1, 1),
-                  spreadRadius: 1,
-                ),
-              ],
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(12.0)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    'Learn how to use Insusty API System',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            getItPages.setUrlPath('/APIDocs');
-            context.go('/APIDocs');
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 70),
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xffc1c1c1),
-                    blurRadius: 19.0,
-                    offset: Offset(2, 2),
-                    spreadRadius: 2,
-                  ),
-                ],
-                color: Color(0xff208207),
-                borderRadius: BorderRadius.all(Radius.circular(12.0)),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Continue to Docs',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
           ),
         ),
         50.height,

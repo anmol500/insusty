@@ -73,6 +73,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             context.go('/Offset');
                           }),
                       DrawerMenu(
+                          name: 'Our Impact',
+                          onTap: () {
+                            getItPages.setUrlPath('/ImpactPage');
+                            context.go('/ImpactPage');
+                          }),
+                      DrawerMenu(
                           name: 'Brand',
                           onTap: () {
                             getItPages.setUrlPath('/BrandPage');
@@ -149,8 +155,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       } else {
                         getItPages.language = 'eng';
                       }
-                      getItPages.setUrlPath('/');
-                      context.go('/');
+
+                      getItPages.setUrlPath(getItPages.drawerOnUrl);
+                      context.go(getItPages.drawerOnUrl);
                     },
                   ),
                 )
